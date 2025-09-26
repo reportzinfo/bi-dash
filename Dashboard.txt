@@ -1,0 +1,113 @@
+Comprehensive Sales, Order & Fulfillment Dashboard
+
+(Lead → Order → Shipment → Fulfillment)
+
+1. Sales Funnel & Leads
+
+Leads Generated (by source, trend)
+
+Conversion Funnel (Lead → Opportunity → Order)
+
+Pipeline Value (potential revenue by stage)
+
+2. Orders & Revenue
+
+Total Orders (placed, confirmed, canceled)
+
+Order Value (MTD, YTD, avg. order size)
+
+Sales by Product/Category/Region
+
+New vs. Repeat Orders
+
+Revenue vs. Target
+
+3. Order In-Hand (Unfulfilled Orders)
+
+Total Orders In-Hand (yet to be fulfilled)
+
+Value of Orders In-Hand
+
+Aging of In-Hand Orders (0–7 days, 8–15 days, 16+ days)
+
+Orders Awaiting Inventory Allocation
+
+Pending Approvals/Payment
+
+4. Shipments
+
+Shipment Status Breakdown
+
+Pending Dispatch
+
+In Transit
+
+Delivered
+
+Returned/Failed
+
+On-Time Shipment %
+
+Average Shipment Duration (order → dispatch → delivery)
+
+Shipment Costs vs. Sales Value
+
+Carrier/Logistics Performance (delivery SLA compliance)
+
+5. Fulfillment & Customer Experience
+
+Order Cycle Time (Lead → Order → Delivery)
+
+Delivery Accuracy % (right product, right customer)
+
+Returns & Refund Rate
+
+Customer Complaints (shipment-related)
+
+Customer Satisfaction (if survey data available)
+
+6. Inventory & Operations
+
+Inventory Status (available stock, stock-outs, reserved for orders)
+
+Fast/Slow-Moving SKUs
+
+Safety Stock & Reorder Alerts
+
+Orders Held Due to Stock Shortage
+
+7. Performance KPIs
+
+Salesperson/Team Order Fulfillment Rate
+
+Lead-to-Cash Conversion Rate
+
+Forecast Accuracy (expected vs. actual sales/shipments)
+
+Gross Margin after logistics cost
+
+8. Dashboard Visuals
+
+Sales Funnel Chart (Lead → Opportunity → Order → Fulfillment)
+
+Order In-Hand Aging Heatmap
+
+Shipment Status Pie/Donut Chart
+
+Geo Map of Deliveries
+
+Revenue Trend Line
+
+Top Products & Regions (bar/column)
+
+Inventory Gauge (available vs. reserved)
+
+⚡ With Order In-Hand + Shipment features, you’ll get:
+
+Sales view (orders won)
+
+Execution view (what’s pending in-hand)
+
+Logistics view (shipment progress)
+
+Customer view (on-time, accurate delivery experience)

@@ -1,0 +1,1724 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lead-to-Fulfillment Dashboard</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f8fafc;
+            color: #334155;
+        }
+
+        .dashboard-container {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Header */
+        .header {
+            background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+            color: white;
+            padding: 1rem 2rem;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .header h1 {
+            font-size: 1.5rem;
+            font-weight: 600;
+        }
+
+        .header-controls {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+        }
+
+        .fiscal-year-selector {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .fiscal-year-selector label {
+            font-size: 0.875rem;
+            font-weight: 500;
+        }
+
+        .fiscal-year-selector select {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            font-size: 0.875rem;
+            cursor: pointer;
+        }
+
+        .fiscal-year-selector select option {
+            background: #1e293b;
+            color: white;
+        }
+
+        .header-info {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            font-size: 0.875rem;
+        }
+
+        .status-indicator {
+            background: #10b981;
+            padding: 0.25rem 0.75rem;
+            border-radius: 12px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+
+        /* Navigation */
+        .nav-tabs {
+            background: white;
+            border-bottom: 1px solid #e2e8f0;
+            padding: 0 2rem;
+            display: flex;
+            gap: 2rem;
+        }
+
+        .nav-tab {
+            padding: 1rem 0;
+            border-bottom: 3px solid transparent;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .nav-tab.active {
+            border-bottom-color: #2563eb;
+            color: #2563eb;
+        }
+
+        .nav-tab:hover {
+            color: #2563eb;
+        }
+
+        /* Main Content */
+        .main-content {
+            flex: 1;
+            padding: 2rem;
+        }
+
+        /* Fiscal Period Indicator */
+        .fiscal-period-indicator {
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+            border: 1px solid #cbd5e1;
+            border-radius: 8px;
+            padding: 1rem 1.5rem;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .period-label {
+            font-weight: 600;
+            color: #475569;
+            font-size: 0.875rem;
+        }
+
+        .period-text {
+            font-weight: 700;
+            color: #2563eb;
+            font-size: 0.875rem;
+        }
+
+        /* Fiscal Year Comparison */
+        .fiscal-comparison-section {
+            margin-bottom: 2rem;
+        }
+
+        .section-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: #1e293b;
+            margin-bottom: 1rem;
+        }
+
+        .comparison-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .comparison-card {
+            background: white;
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            border-left: 4px solid #10b981;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .comparison-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+
+        .comparison-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .comparison-label {
+            font-size: 0.875rem;
+            font-weight: 600;
+            color: #64748b;
+        }
+
+        .comparison-period {
+            font-size: 0.75rem;
+            font-weight: 500;
+            color: #2563eb;
+            background: #eff6ff;
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+        }
+
+        .comparison-value {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #1e293b;
+            margin-bottom: 0.5rem;
+        }
+
+        .comparison-change {
+            font-size: 0.875rem;
+            font-weight: 600;
+        }
+
+        .comparison-change.positive {
+            color: #10b981;
+        }
+
+        .comparison-change.negative {
+            color: #ef4444;
+        }
+
+        /* KPI Cards */
+        .kpi-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .kpi-card {
+            background: white;
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            border-left: 4px solid #2563eb;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .kpi-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+
+        .kpi-card.green { border-left-color: #10b981; }
+        .kpi-card.orange { border-left-color: #f59e0b; }
+        .kpi-card.purple { border-left-color: #8b5cf6; }
+
+        .kpi-value {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #1e293b;
+            margin-bottom: 0.5rem;
+        }
+
+        .kpi-label {
+            font-size: 0.875rem;
+            color: #64748b;
+            font-weight: 500;
+        }
+
+        .kpi-icon {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        /* Chart Grid */
+        .chart-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .chart-container {
+            background: white;
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+
+        .chart-title {
+            font-size: 1.125rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: #1e293b;
+        }
+
+        /* Funnel Chart */
+        .funnel-chart {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .funnel-stage {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .funnel-bar {
+            height: 30px;
+            background: linear-gradient(90deg, #2563eb, #3b82f6);
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            padding: 0 1rem;
+            color: white;
+            font-weight: 500;
+            font-size: 0.875rem;
+        }
+
+        .funnel-label {
+            min-width: 120px;
+            font-weight: 500;
+        }
+
+        /* Revenue Chart */
+        .revenue-chart {
+            height: 200px;
+            background: linear-gradient(45deg, #f0f9ff 0%, #e0f2fe 100%);
+            border-radius: 8px;
+            display: flex;
+            align-items: end;
+            justify-content: space-around;
+            padding: 1rem;
+        }
+
+        .revenue-bar {
+            width: 30px;
+            background: linear-gradient(180deg, #10b981 0%, #059669 100%);
+            border-radius: 4px 4px 0 0;
+            position: relative;
+        }
+
+        .revenue-bar::after {
+            content: attr(data-month);
+            position: absolute;
+            bottom: -25px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 0.75rem;
+            color: #64748b;
+        }
+
+        /* Geographic Map */
+        .geo-map {
+            height: 200px;
+            background: #f1f5f9;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            color: #64748b;
+        }
+
+        .geo-stats {
+            margin-top: 1rem;
+        }
+
+        .geo-stat {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.5rem 0;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        /* Lead Source Table */
+        .lead-source-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .lead-source-table th,
+        .lead-source-table td {
+            padding: 0.75rem;
+            text-align: left;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .lead-source-table th {
+            background: #f8fafc;
+            font-weight: 600;
+            color: #374151;
+        }
+
+        .lead-source-table tr:hover {
+            background: #f8fafc;
+        }
+
+        /* Alerts */
+        .alerts {
+            background: #fef3c7;
+            border: 1px solid #f59e0b;
+            border-radius: 8px;
+            padding: 1rem;
+            margin-top: 2rem;
+        }
+
+        .alerts-title {
+            font-weight: 600;
+            color: #92400e;
+            margin-bottom: 0.5rem;
+        }
+
+        .alert-item {
+            display: inline-block;
+            background: #f59e0b;
+            color: white;
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.875rem;
+            margin-right: 0.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .chart-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .kpi-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .nav-tabs {
+                overflow-x: auto;
+                white-space: nowrap;
+            }
+        }
+
+        /* Progress Bars */
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: #e2e8f0;
+            border-radius: 4px;
+            overflow: hidden;
+            margin: 0.5rem 0;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #10b981, #059669);
+            border-radius: 4px;
+            transition: width 0.3s ease;
+        }
+
+        .metric-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.5rem 0;
+            border-bottom: 1px solid #f1f5f9;
+        }
+
+        .metric-row:last-child {
+            border-bottom: none;
+        }
+
+        /* Pipeline Visualization */
+        .pipeline-visual {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin: 1rem 0;
+        }
+
+        .pipeline-stage {
+            flex: 1;
+            text-align: center;
+            position: relative;
+        }
+
+        .pipeline-number {
+            background: #2563eb;
+            color: white;
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            margin: 0 auto 0.5rem;
+        }
+
+        .pipeline-arrow {
+            position: absolute;
+            right: -1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #64748b;
+            font-size: 1.5rem;
+        }
+
+        .pipeline-stage:last-child .pipeline-arrow {
+            display: none;
+        }
+
+        /* Order Status Cards */
+        .status-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin: 1rem 0;
+        }
+
+        .status-card {
+            background: white;
+            border-radius: 8px;
+            padding: 1rem;
+            text-align: center;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+
+        .status-icon {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .status-number {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #1e293b;
+        }
+
+        .status-label {
+            font-size: 0.875rem;
+            color: #64748b;
+        }
+    </style>
+</head>
+<body>
+    <div class="dashboard-container">
+        <!-- Header -->
+        <header class="header">
+            <div class="header-content">
+                <h1>🚀 Lead-to-Fulfillment Dashboard</h1>
+                <div class="header-controls">
+                    <div class="fiscal-year-selector">
+                        <label for="fiscalYear">Fiscal Year:</label>
+                        <select id="fiscalYear" onchange="updateFiscalYear()">
+                            <option value="2024">FY 2024 (Mar 2023 - Feb 2024)</option>
+                            <option value="2025" selected>FY 2025 (Mar 2024 - Feb 2025)</option>
+                            <option value="2026">FY 2026 (Mar 2025 - Feb 2026)</option>
+                        </select>
+                    </div>
+                    <div class="header-info">
+                        <span>Last Updated: <span id="lastUpdated"></span></span>
+                        <span class="status-indicator">Live</span>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Navigation -->
+        <nav class="nav-tabs">
+            <div class="nav-tab active" data-tab="executive">Executive Overview</div>
+            <div class="nav-tab" data-tab="pipeline">Pipeline</div>
+            <div class="nav-tab" data-tab="orders">Orders</div>
+            <div class="nav-tab" data-tab="operations">Operations</div>
+            <div class="nav-tab" data-tab="customers">Customers</div>
+            <div class="nav-tab" data-tab="cashflow">Cashflow</div>
+            <div class="nav-tab" data-tab="analytics">Analytics</div>
+        </nav>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Executive Overview Tab -->
+            <div id="executive-tab" class="tab-content">
+                <!-- Fiscal Year Period Indicator -->
+                <div class="fiscal-period-indicator">
+                    <span class="period-label">📅 Current Period:</span>
+                    <span id="currentFiscalPeriod" class="period-text">FY 2025 (Mar 2024 - Feb 2025)</span>
+                </div>
+                
+                <!-- KPI Cards -->
+                <div class="kpi-grid">
+                    <div class="kpi-card">
+                        <div class="kpi-icon">🎯</div>
+                        <div class="kpi-value">1,247</div>
+                        <div class="kpi-label">Active Prospects</div>
+                    </div>
+                    <div class="kpi-card green">
+                        <div class="kpi-icon">💰</div>
+                        <div class="kpi-value">$2.4M</div>
+                        <div class="kpi-label">Pipeline Value</div>
+                    </div>
+                    <div class="kpi-card orange">
+                        <div class="kpi-icon">📈</div>
+                        <div class="kpi-value">18.5%</div>
+                        <div class="kpi-label">Conversion Rate</div>
+                    </div>
+                    <div class="kpi-card purple">
+                        <div class="kpi-icon">⏱️</div>
+                        <div class="kpi-value">32 days</div>
+                        <div class="kpi-label">Avg Cycle Time</div>
+                    </div>
+                    <div class="kpi-card">
+                        <div class="kpi-icon">📦</div>
+                        <div class="kpi-value">$890K</div>
+                        <div class="kpi-label">Orders In-Hand</div>
+                    </div>
+                    <div class="kpi-card green">
+                        <div class="kpi-icon">✅</div>
+                        <div class="kpi-value">94.2%</div>
+                        <div class="kpi-label">On-Time Delivery</div>
+                    </div>
+                    <div class="kpi-card">
+                        <div class="kpi-icon">💵</div>
+                        <div class="kpi-value">$1.8M</div>
+                        <div class="kpi-label">Monthly Revenue</div>
+                    </div>
+                    <div class="kpi-card purple">
+                        <div class="kpi-icon">😊</div>
+                        <div class="kpi-value">4.2/5</div>
+                        <div class="kpi-label">Customer Satisfaction</div>
+                    </div>
+                </div>
+
+                <!-- Fiscal Year Comparison -->
+                <div class="fiscal-comparison-section">
+                    <h3 class="section-title">📊 Fiscal Year Comparison</h3>
+                    <div class="comparison-grid">
+                        <div class="comparison-card">
+                            <div class="comparison-header">
+                                <span class="comparison-label">Revenue</span>
+                                <span class="comparison-period" id="currentFYLabel">FY 2025</span>
+                            </div>
+                            <div class="comparison-value current" id="currentRevenue">$18.2M</div>
+                            <div class="comparison-change positive" id="revenueChange">+12.5% vs Previous FY</div>
+                        </div>
+                        <div class="comparison-card">
+                            <div class="comparison-header">
+                                <span class="comparison-label">Pipeline Value</span>
+                                <span class="comparison-period" id="currentFYLabel2">FY 2025</span>
+                            </div>
+                            <div class="comparison-value current" id="currentPipeline">$2.4M</div>
+                            <div class="comparison-change positive" id="pipelineChange">+8.3% vs Previous FY</div>
+                        </div>
+                        <div class="comparison-card">
+                            <div class="comparison-header">
+                                <span class="comparison-label">Conversion Rate</span>
+                                <span class="comparison-period" id="currentFYLabel3">FY 2025</span>
+                            </div>
+                            <div class="comparison-value current" id="currentConversion">18.5%</div>
+                            <div class="comparison-change positive" id="conversionChange">+2.1% vs Previous FY</div>
+                        </div>
+                        <div class="comparison-card">
+                            <div class="comparison-header">
+                                <span class="comparison-label">Customer Satisfaction</span>
+                                <span class="comparison-period" id="currentFYLabel4">FY 2025</span>
+                            </div>
+                            <div class="comparison-value current" id="currentSatisfaction">4.2/5</div>
+                            <div class="comparison-change positive" id="satisfactionChange">+0.3 vs Previous FY</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Charts Grid -->
+                <div class="chart-grid">
+                    <!-- Sales Funnel -->
+                    <div class="chart-container">
+                        <h3 class="chart-title">Sales Funnel</h3>
+                        <div class="funnel-chart">
+                            <div class="funnel-stage">
+                                <div class="funnel-label">Prospects</div>
+                                <div class="funnel-bar" style="width: 100%;">1,247</div>
+                            </div>
+                            <div class="funnel-stage">
+                                <div class="funnel-label">Qualified</div>
+                                <div class="funnel-bar" style="width: 75%;">892</div>
+                            </div>
+                            <div class="funnel-stage">
+                                <div class="funnel-label">Opportunities</div>
+                                <div class="funnel-bar" style="width: 50%;">456</div>
+                            </div>
+                            <div class="funnel-stage">
+                                <div class="funnel-label">Proposals</div>
+                                <div class="funnel-bar" style="width: 25%;">234</div>
+                            </div>
+                            <div class="funnel-stage">
+                                <div class="funnel-label">Won Orders</div>
+                                <div class="funnel-bar" style="width: 15%;">89</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Revenue Trend -->
+                    <div class="chart-container">
+                        <h3 class="chart-title">Revenue Trend</h3>
+                        <div class="revenue-chart">
+                            <div class="revenue-bar" style="height: 60%;" data-month="Jan"></div>
+                            <div class="revenue-bar" style="height: 75%;" data-month="Feb"></div>
+                            <div class="revenue-bar" style="height: 85%;" data-month="Mar"></div>
+                            <div class="revenue-bar" style="height: 70%;" data-month="Apr"></div>
+                            <div class="revenue-bar" style="height: 90%;" data-month="May"></div>
+                            <div class="revenue-bar" style="height: 100%;" data-month="Jun"></div>
+                        </div>
+                    </div>
+
+                    <!-- Geographic Performance -->
+                    <div class="chart-container">
+                        <h3 class="chart-title">Geographic Performance</h3>
+                        <div class="geo-map">🗺️</div>
+                        <div class="geo-stats">
+                            <div class="geo-stat">
+                                <span>North America</span>
+                                <strong>$1.2M</strong>
+                            </div>
+                            <div class="geo-stat">
+                                <span>Europe</span>
+                                <strong>$890K</strong>
+                            </div>
+                            <div class="geo-stat">
+                                <span>Asia Pacific</span>
+                                <strong>$456K</strong>
+                            </div>
+                            <div class="geo-stat">
+                                <span>Others</span>
+                                <strong>$234K</strong>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Lead Source Matrix -->
+                    <div class="chart-container">
+                        <h3 class="chart-title">Lead Source Performance</h3>
+                        <table class="lead-source-table">
+                            <thead>
+                                <tr>
+                                    <th>Source</th>
+                                    <th>Leads</th>
+                                    <th>Conv%</th>
+                                    <th>ROI</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Trade Shows</td>
+                                    <td>342</td>
+                                    <td>24.1%</td>
+                                    <td>340%</td>
+                                </tr>
+                                <tr>
+                                    <td>Referrals</td>
+                                    <td>198</td>
+                                    <td>31.2%</td>
+                                    <td>420%</td>
+                                </tr>
+                                <tr>
+                                    <td>Digital</td>
+                                    <td>456</td>
+                                    <td>12.8%</td>
+                                    <td>180%</td>
+                                </tr>
+                                <tr>
+                                    <td>Cold Calls</td>
+                                    <td>251</td>
+                                    <td>8.4%</td>
+                                    <td>120%</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Additional Metrics Section -->
+                <div class="chart-grid">
+                    <div class="chart-container">
+                        <h3 class="chart-title">Order In-Hand Aging</h3>
+                        <div class="metric-row">
+                            <span>0-7 Days</span>
+                            <span><strong>156 orders ($450K)</strong></span>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: 70%;"></div>
+                        </div>
+                        <div class="metric-row">
+                            <span>8-15 Days</span>
+                            <span><strong>89 orders ($280K)</strong></span>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: 45%; background: linear-gradient(90deg, #f59e0b, #d97706);"></div>
+                        </div>
+                        <div class="metric-row">
+                            <span>16+ Days ⚠️</span>
+                            <span><strong>34 orders ($160K)</strong></span>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: 20%; background: linear-gradient(90deg, #ef4444, #dc2626);"></div>
+                        </div>
+                    </div>
+
+                    <div class="chart-container">
+                        <h3 class="chart-title">Shipment Status</h3>
+                        <div class="metric-row">
+                            <span>📋 Pending Dispatch</span>
+                            <span><strong>45 (16%)</strong></span>
+                        </div>
+                        <div class="metric-row">
+                            <span>🚚 In Transit</span>
+                            <span><strong>89 (32%)</strong></span>
+                        </div>
+                        <div class="metric-row">
+                            <span>✅ Delivered</span>
+                            <span><strong>134 (48%)</strong></span>
+                        </div>
+                        <div class="metric-row">
+                            <span>↩️ Returns</span>
+                            <span><strong>11 (4%)</strong></span>
+                        </div>
+                        <div style="margin-top: 1rem; padding-top: 1rem; border-top: 1px solid #e2e8f0;">
+                            <div class="metric-row">
+                                <span>On-Time Rate</span>
+                                <span><strong style="color: #10b981;">94.2%</strong></span>
+                            </div>
+                            <div class="metric-row">
+                                <span>Avg Delivery Time</span>
+                                <span><strong>5.2 days</strong></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Alerts -->
+                <div class="alerts">
+                    <div class="alerts-title">🚨 Active Alerts</div>
+                    <span class="alert-item">3 Orders >15 days</span>
+                    <span class="alert-item">Low Inventory: SKU-123</span>
+                    <span class="alert-item">Pipeline Risk: Q3</span>
+                    <span class="alert-item">Customer Complaint: Order #4567</span>
+                </div>
+            </div>
+
+            <!-- Pipeline Tab -->
+            <div id="pipeline-tab" class="tab-content" style="display: none;">
+                <div class="chart-container">
+                    <h3 class="chart-title">Interactive Pipeline Funnel</h3>
+                    <div class="pipeline-visual">
+                        <div class="pipeline-stage">
+                            <div class="pipeline-number">1,247</div>
+                            <div>New Prospects</div>
+                            <div class="pipeline-arrow">→</div>
+                        </div>
+                        <div class="pipeline-stage">
+                            <div class="pipeline-number" style="background: #10b981;">892</div>
+                            <div>Qualified Leads</div>
+                            <div class="pipeline-arrow">→</div>
+                        </div>
+                        <div class="pipeline-stage">
+                            <div class="pipeline-number" style="background: #f59e0b;">456</div>
+                            <div>Opportunities</div>
+                            <div class="pipeline-arrow">→</div>
+                        </div>
+                        <div class="pipeline-stage">
+                            <div class="pipeline-number" style="background: #8b5cf6;">234</div>
+                            <div>Proposals</div>
+                            <div class="pipeline-arrow">→</div>
+                        </div>
+                        <div class="pipeline-stage">
+                            <div class="pipeline-number" style="background: #ef4444;">89</div>
+                            <div>Won Orders</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="chart-grid">
+                    <div class="chart-container">
+                        <h3 class="chart-title">RFQ Pipeline</h3>
+                        <table class="lead-source-table">
+                            <thead>
+                                <tr>
+                                    <th>Stage</th>
+                                    <th>Count</th>
+                                    <th>Value</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Quote Requested</td>
+                                    <td>45</td>
+                                    <td>$890K</td>
+                                </tr>
+                                <tr>
+                                    <td>Quote Sent</td>
+                                    <td>32</td>
+                                    <td>$650K</td>
+                                </tr>
+                                <tr>
+                                    <td>Under Review</td>
+                                    <td>18</td>
+                                    <td>$420K</td>
+                                </tr>
+                                <tr>
+                                    <td>Negotiation</td>
+                                    <td>12</td>
+                                    <td>$280K</td>
+                                </tr>
+                                <tr>
+                                    <td>Pending Award</td>
+                                    <td>8</td>
+                                    <td>$180K</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <div style="margin-top: 1rem; padding-top: 1rem; border-top: 1px solid #e2e8f0;">
+                            <div class="metric-row">
+                                <span>Avg Response Time</span>
+                                <span><strong>3.2 days</strong></span>
+                            </div>
+                            <div class="metric-row">
+                                <span>Win Rate</span>
+                                <span><strong style="color: #10b981;">67%</strong></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="chart-container">
+                        <h3 class="chart-title">Sales Rep Performance</h3>
+                        <table class="lead-source-table">
+                            <thead>
+                                <tr>
+                                    <th>Rep Name</th>
+                                    <th>Leads</th>
+                                    <th>Conv%</th>
+                                    <th>Revenue</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>John Smith</td>
+                                    <td>89</td>
+                                    <td>22.5%</td>
+                                    <td>$1.2M</td>
+                                </tr>
+                                <tr>
+                                    <td>Sarah Jones</td>
+                                    <td>76</td>
+                                    <td>28.9%</td>
+                                    <td>$1.8M</td>
+                                </tr>
+                                <tr>
+                                    <td>Mike Wilson</td>
+                                    <td>65</td>
+                                    <td>19.2%</td>
+                                    <td>$0.9M</td>
+                                </tr>
+                                <tr>
+                                    <td>Lisa Brown</td>
+                                    <td>82</td>
+                                    <td>31.1%</td>
+                                    <td>$2.1M</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Orders Tab -->
+            <div id="orders-tab" class="tab-content" style="display: none;">
+                <div class="status-grid">
+                    <div class="status-card">
+                        <div class="status-icon">📋</div>
+                        <div class="status-number">279</div>
+                        <div class="status-label">Total Orders</div>
+                    </div>
+                    <div class="status-card">
+                        <div class="status-icon">✅</div>
+                        <div class="status-number">245</div>
+                        <div class="status-label">Confirmed</div>
+                    </div>
+                    <div class="status-card">
+                        <div class="status-icon">⏳</div>
+                        <div class="status-number">23</div>
+                        <div class="status-label">Pending</div>
+                    </div>
+                    <div class="status-card">
+                        <div class="status-icon">❌</div>
+                        <div class="status-number">11</div>
+                        <div class="status-label">Canceled</div>
+                    </div>
+                </div>
+
+                <div class="chart-grid">
+                    <div class="chart-container">
+                        <h3 class="chart-title">Order Value Analysis</h3>
+                        <div class="metric-row">
+                            <span>Month-to-Date</span>
+                            <span><strong>$1.8M</strong></span>
+                        </div>
+                        <div class="metric-row">
+                            <span>Year-to-Date</span>
+                            <span><strong>$18.4M</strong></span>
+                        </div>
+                        <div class="metric-row">
+                            <span>Average Order Size</span>
+                            <span><strong>$6,450</strong></span>
+                        </div>
+                        <div class="metric-row">
+                            <span>Target Achievement</span>
+                            <span><strong style="color: #10b981;">102%</strong></span>
+                        </div>
+                    </div>
+
+                    <div class="chart-container">
+                        <h3 class="chart-title">New vs Repeat Orders</h3>
+                        <div class="metric-row">
+                            <span>New Customers</span>
+                            <span><strong>89 orders (32%)</strong></span>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: 32%;"></div>
+                        </div>
+                        <div class="metric-row">
+                            <span>Repeat Customers</span>
+                            <span><strong>190 orders (68%)</strong></span>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: 68%; background: linear-gradient(90deg, #8b5cf6, #7c3aed);"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Operations Tab -->
+            <div id="operations-tab" class="tab-content" style="display: none;">
+                <div class="chart-container">
+                    <h3 class="chart-title">Inventory Status Overview</h3>
+                    <div class="status-grid">
+                        <div class="status-card">
+                            <div class="status-icon">📦</div>
+                            <div class="status-number">78%</div>
+                            <div class="status-label">Available Stock</div>
+                        </div>
+                        <div class="status-card">
+                            <div class="status-icon">🔒</div>
+                            <div class="status-number">15%</div>
+                            <div class="status-label">Reserved</div>
+                        </div>
+                        <div class="status-card">
+                            <div class="status-icon">⚠️</div>
+                            <div class="status-number">5%</div>
+                            <div class="status-label">Safety Stock</div>
+                        </div>
+                        <div class="status-card">
+                            <div class="status-icon">🚫</div>
+                            <div class="status-number">2%</div>
+                            <div class="status-label">Stock Out</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="chart-grid">
+                    <div class="chart-container">
+                        <h3 class="chart-title">Carrier Performance</h3>
+                        <table class="lead-source-table">
+                            <thead>
+                                <tr>
+                                    <th>Carrier</th>
+                                    <th>On-Time %</th>
+                                    <th>Avg Cost</th>
+                                    <th>Rating</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>FedEx</td>
+                                    <td>96.2%</td>
+                                    <td>$45</td>
+                                    <td>⭐⭐⭐⭐⭐</td>
+                                </tr>
+                                <tr>
+                                    <td>UPS</td>
+                                    <td>94.8%</td>
+                                    <td>$42</td>
+                                    <td>⭐⭐⭐⭐</td>
+                                </tr>
+                                <tr>
+                                    <td>DHL</td>
+                                    <td>91.3%</td>
+                                    <td>$38</td>
+                                    <td>⭐⭐⭐</td>
+                                </tr>
+                                <tr>
+                                    <td>Local</td>
+                                    <td>89.7%</td>
+                                    <td>$35</td>
+                                    <td>⭐⭐⭐</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="chart-container">
+                        <h3 class="chart-title">Quality Metrics</h3>
+                        <div class="metric-row">
+                            <span>Delivery Accuracy</span>
+                            <span><strong style="color: #10b981;">98.7%</strong></span>
+                        </div>
+                        <div class="metric-row">
+                            <span>Return Rate</span>
+                            <span><strong>2.1%</strong></span>
+                        </div>
+                        <div class="metric-row">
+                            <span>Customer Complaints</span>
+                            <span><strong>0.8%</strong></span>
+                        </div>
+                        <div style="margin-top: 1rem; padding-top: 1rem; border-top: 1px solid #e2e8f0;">
+                            <h4 style="margin-bottom: 0.5rem;">Top Return Reasons:</h4>
+                            <div class="metric-row">
+                                <span>Damaged in transit</span>
+                                <span><strong>45%</strong></span>
+                            </div>
+                            <div class="metric-row">
+                                <span>Wrong item shipped</span>
+                                <span><strong>32%</strong></span>
+                            </div>
+                            <div class="metric-row">
+                                <span>Customer changed mind</span>
+                                <span><strong>23%</strong></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Customers Tab -->
+            <div id="customers-tab" class="tab-content" style="display: none;">
+                <div class="chart-grid">
+                    <div class="chart-container">
+                        <h3 class="chart-title">Customer Lifecycle Metrics</h3>
+                        <div class="metric-row">
+                            <span>Customer Acquisition Cost (CAC)</span>
+                            <span><strong>$245</strong></span>
+                        </div>
+                        <div class="metric-row">
+                            <span>Customer Lifetime Value (CLV)</span>
+                            <span><strong>$12,450</strong></span>
+                        </div>
+                        <div class="metric-row">
+                            <span>Average First Order Value</span>
+                            <span><strong>$3,200</strong></span>
+                        </div>
+                        <div class="metric-row">
+                            <span>Repeat Order Rate</span>
+                            <span><strong style="color: #10b981;">68%</strong></span>
+                        </div>
+                    </div>
+
+                    <div class="chart-container">
+                        <h3 class="chart-title">Customer Satisfaction</h3>
+                        <div class="metric-row">
+                            <span>Overall Satisfaction</span>
+                            <span><strong style="color: #10b981;">4.2/5</strong></span>
+                        </div>
+                        <div class="metric-row">
+                            <span>Net Promoter Score (NPS)</span>
+                            <span><strong>+42</strong></span>
+                        </div>
+                        <div class="metric-row">
+                            <span>Customer Retention Rate</span>
+                            <span><strong style="color: #10b981;">89%</strong></span>
+                        </div>
+                        <div class="metric-row">
+                            <span>Churn Risk Customers</span>
+                            <span><strong style="color: #f59e0b;">23</strong></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Cashflow Tab -->
+            <div id="cashflow-tab" class="tab-content" style="display: none;">
+                <!-- Cashflow KPI Cards -->
+                <div class="kpi-grid">
+                    <div class="kpi-card">
+                        <div class="kpi-icon">💰</div>
+                        <div class="kpi-value">$2.4M</div>
+                        <div class="kpi-label">Current Cash Position</div>
+                    </div>
+                    <div class="kpi-card green">
+                        <div class="kpi-icon">📈</div>
+                        <div class="kpi-value">$890K</div>
+                        <div class="kpi-label">Monthly Cash Inflow</div>
+                    </div>
+                    <div class="kpi-card orange">
+                        <div class="kpi-icon">📉</div>
+                        <div class="kpi-value">$650K</div>
+                        <div class="kpi-label">Monthly Cash Outflow</div>
+                    </div>
+                    <div class="kpi-card purple">
+                        <div class="kpi-icon">⏳</div>
+                        <div class="kpi-value">$240K</div>
+                        <div class="kpi-label">Net Monthly Flow</div>
+                    </div>
+                    <div class="kpi-card">
+                        <div class="kpi-icon">🧾</div>
+                        <div class="kpi-value">$1.8M</div>
+                        <div class="kpi-label">Accounts Receivable</div>
+                    </div>
+                    <div class="kpi-card orange">
+                        <div class="kpi-icon">💳</div>
+                        <div class="kpi-value">$420K</div>
+                        <div class="kpi-label">Accounts Payable</div>
+                    </div>
+                    <div class="kpi-card green">
+                        <div class="kpi-icon">📊</div>
+                        <div class="kpi-value">28 days</div>
+                        <div class="kpi-label">Avg Collection Period</div>
+                    </div>
+                    <div class="kpi-card purple">
+                        <div class="kpi-icon">🔥</div>
+                        <div class="kpi-value">$180K</div>
+                        <div class="kpi-label">Monthly Burn Rate</div>
+                    </div>
+                </div>
+
+                <!-- Cashflow Charts -->
+                <div class="chart-grid">
+                    <!-- Cashflow Trend -->
+                    <div class="chart-container">
+                        <h3 class="chart-title">12-Month Cashflow Trend</h3>
+                        <div class="revenue-chart">
+                            <div class="revenue-bar" style="height: 60%; background: linear-gradient(180deg, #10b981 0%, #059669 100%);" data-month="Jan"></div>
+                            <div class="revenue-bar" style="height: 45%; background: linear-gradient(180deg, #f59e0b 0%, #d97706 100%);" data-month="Feb"></div>
+                            <div class="revenue-bar" style="height: 75%; background: linear-gradient(180deg, #10b981 0%, #059669 100%);" data-month="Mar"></div>
+                            <div class="revenue-bar" style="height: 85%; background: linear-gradient(180deg, #10b981 0%, #059669 100%);" data-month="Apr"></div>
+                            <div class="revenue-bar" style="height: 30%; background: linear-gradient(180deg, #ef4444 0%, #dc2626 100%);" data-month="May"></div>
+                            <div class="revenue-bar" style="height: 90%; background: linear-gradient(180deg, #10b981 0%, #059669 100%);" data-month="Jun"></div>
+                            <div class="revenue-bar" style="height: 70%; background: linear-gradient(180deg, #10b981 0%, #059669 100%);" data-month="Jul"></div>
+                            <div class="revenue-bar" style="height: 55%; background: linear-gradient(180deg, #f59e0b 0%, #d97706 100%);" data-month="Aug"></div>
+                            <div class="revenue-bar" style="height: 80%; background: linear-gradient(180deg, #10b981 0%, #059669 100%);" data-month="Sep"></div>
+                            <div class="revenue-bar" style="height: 95%; background: linear-gradient(180deg, #10b981 0%, #059669 100%);" data-month="Oct"></div>
+                            <div class="revenue-bar" style="height: 65%; background: linear-gradient(180deg, #10b981 0%, #059669 100%);" data-month="Nov"></div>
+                            <div class="revenue-bar" style="height: 100%; background: linear-gradient(180deg, #10b981 0%, #059669 100%);" data-month="Dec"></div>
+                        </div>
+                        <div style="margin-top: 1rem; display: flex; justify-content: space-around; font-size: 0.75rem; color: #64748b;">
+                            <span style="color: #10b981;">● Positive Flow</span>
+                            <span style="color: #f59e0b;">● Neutral Flow</span>
+                            <span style="color: #ef4444;">● Negative Flow</span>
+                        </div>
+                    </div>
+
+                    <!-- Cash Position Breakdown -->
+                    <div class="chart-container">
+                        <h3 class="chart-title">Cash Position Breakdown</h3>
+                        <div class="metric-row">
+                            <span>Operating Cash</span>
+                            <span><strong>$1.8M</strong></span>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: 75%;"></div>
+                        </div>
+                        <div class="metric-row">
+                            <span>Emergency Reserve</span>
+                            <span><strong>$450K</strong></span>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: 19%; background: linear-gradient(90deg, #f59e0b, #d97706);"></div>
+                        </div>
+                        <div class="metric-row">
+                            <span>Investment Fund</span>
+                            <span><strong>$150K</strong></span>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: 6%; background: linear-gradient(90deg, #8b5cf6, #7c3aed);"></div>
+                        </div>
+                        <div style="margin-top: 1rem; padding-top: 1rem; border-top: 1px solid #e2e8f0;">
+                            <div class="metric-row">
+                                <span><strong>Total Cash Available</strong></span>
+                                <span><strong style="color: #10b981;">$2.4M</strong></span>
+                            </div>
+                            <div class="metric-row">
+                                <span>Days Cash on Hand</span>
+                                <span><strong style="color: #10b981;">133 days</strong></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Accounts Receivable Aging -->
+                    <div class="chart-container">
+                        <h3 class="chart-title">Accounts Receivable Aging</h3>
+                        <table class="lead-source-table">
+                            <thead>
+                                <tr>
+                                    <th>Age Range</th>
+                                    <th>Amount</th>
+                                    <th>% of Total</th>
+                                    <th>Risk Level</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>0-30 Days</td>
+                                    <td>$1.2M</td>
+                                    <td>67%</td>
+                                    <td style="color: #10b981;">Low</td>
+                                </tr>
+                                <tr>
+                                    <td>31-60 Days</td>
+                                    <td>$420K</td>
+                                    <td>23%</td>
+                                    <td style="color: #f59e0b;">Medium</td>
+                                </tr>
+                                <tr>
+                                    <td>61-90 Days</td>
+                                    <td>$120K</td>
+                                    <td>7%</td>
+                                    <td style="color: #ef4444;">High</td>
+                                </tr>
+                                <tr>
+                                    <td>90+ Days</td>
+                                    <td>$60K</td>
+                                    <td>3%</td>
+                                    <td style="color: #ef4444;">Critical</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <div style="margin-top: 1rem; padding-top: 1rem; border-top: 1px solid #e2e8f0;">
+                            <div class="metric-row">
+                                <span>Collection Efficiency</span>
+                                <span><strong style="color: #10b981;">92%</strong></span>
+                            </div>
+                            <div class="metric-row">
+                                <span>Bad Debt Provision</span>
+                                <span><strong>$18K (1%)</strong></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Payment Terms Analysis -->
+                    <div class="chart-container">
+                        <h3 class="chart-title">Payment Terms & Collection</h3>
+                        <div class="metric-row">
+                            <span>Net 30 Terms</span>
+                            <span><strong>$1.1M (61%)</strong></span>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: 61%;"></div>
+                        </div>
+                        <div class="metric-row">
+                            <span>Net 60 Terms</span>
+                            <span><strong>$540K (30%)</strong></span>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: 30%; background: linear-gradient(90deg, #f59e0b, #d97706);"></div>
+                        </div>
+                        <div class="metric-row">
+                            <span>COD/Prepaid</span>
+                            <span><strong>$160K (9%)</strong></span>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: 9%; background: linear-gradient(90deg, #8b5cf6, #7c3aed);"></div>
+                        </div>
+                        <div style="margin-top: 1rem; padding-top: 1rem; border-top: 1px solid #e2e8f0;">
+                            <div class="metric-row">
+                                <span>Early Payment Discount</span>
+                                <span><strong>2/10 Net 30</strong></span>
+                            </div>
+                            <div class="metric-row">
+                                <span>Discount Utilization</span>
+                                <span><strong style="color: #10b981;">34%</strong></span>
+                            </div>
+                            <div class="metric-row">
+                                <span>Late Payment Fees</span>
+                                <span><strong>$12K collected</strong></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Cashflow Forecast -->
+                <div class="chart-grid">
+                    <div class="chart-container">
+                        <h3 class="chart-title">90-Day Cashflow Forecast</h3>
+                        <div class="metric-row">
+                            <span>Expected Inflows</span>
+                            <span><strong style="color: #10b981;">$2.7M</strong></span>
+                        </div>
+                        <div class="metric-row">
+                            <span>Expected Outflows</span>
+                            <span><strong style="color: #ef4444;">$1.9M</strong></span>
+                        </div>
+                        <div class="metric-row">
+                            <span>Net Forecast</span>
+                            <span><strong style="color: #10b981;">+$800K</strong></span>
+                        </div>
+                        <div class="metric-row">
+                            <span>Forecast Confidence</span>
+                            <span><strong>87%</strong></span>
+                        </div>
+                        <div style="margin-top: 1rem; padding-top: 1rem; border-top: 1px solid #e2e8f0;">
+                            <h4 style="margin-bottom: 0.5rem;">Key Assumptions:</h4>
+                            <div class="metric-row">
+                                <span>Collection Rate</span>
+                                <span><strong>92%</strong></span>
+                            </div>
+                            <div class="metric-row">
+                                <span>New Orders</span>
+                                <span><strong>$1.2M</strong></span>
+                            </div>
+                            <div class="metric-row">
+                                <span>Operating Expenses</span>
+                                <span><strong>$540K/month</strong></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="chart-container">
+                        <h3 class="chart-title">Working Capital Analysis</h3>
+                        <div class="metric-row">
+                            <span>Current Assets</span>
+                            <span><strong>$4.2M</strong></span>
+                        </div>
+                        <div class="metric-row">
+                            <span>Current Liabilities</span>
+                            <span><strong>$1.8M</strong></span>
+                        </div>
+                        <div class="metric-row">
+                            <span>Working Capital</span>
+                            <span><strong style="color: #10b981;">$2.4M</strong></span>
+                        </div>
+                        <div class="metric-row">
+                            <span>Current Ratio</span>
+                            <span><strong style="color: #10b981;">2.33</strong></span>
+                        </div>
+                        <div style="margin-top: 1rem; padding-top: 1rem; border-top: 1px solid #e2e8f0;">
+                            <h4 style="margin-bottom: 0.5rem;">Liquidity Metrics:</h4>
+                            <div class="metric-row">
+                                <span>Quick Ratio</span>
+                                <span><strong style="color: #10b981;">1.89</strong></span>
+                            </div>
+                            <div class="metric-row">
+                                <span>Cash Ratio</span>
+                                <span><strong style="color: #10b981;">1.33</strong></span>
+                            </div>
+                            <div class="metric-row">
+                                <span>Working Capital Turnover</span>
+                                <span><strong>7.5x</strong></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Cashflow Alerts -->
+                <div class="alerts">
+                    <div class="alerts-title">💰 Cashflow Alerts</div>
+                    <span class="alert-item">$60K overdue >90 days</span>
+                    <span class="alert-item">Large payment due: $180K (15th)</span>
+                    <span class="alert-item">Credit line utilization: 45%</span>
+                    <span class="alert-item">Seasonal dip forecast: Q1</span>
+                </div>
+            </div>
+
+            <!-- Analytics Tab -->
+            <div id="analytics-tab" class="tab-content" style="display: none;">
+                <div class="chart-grid">
+                    <div class="chart-container">
+                        <h3 class="chart-title">Predictive Analytics</h3>
+                        <div class="metric-row">
+                            <span>Q3 Revenue Forecast</span>
+                            <span><strong>$5.8M</strong></span>
+                        </div>
+                        <div class="metric-row">
+                            <span>Forecast Confidence</span>
+                            <span><strong style="color: #10b981;">85%</strong></span>
+                        </div>
+                        <div class="metric-row">
+                            <span>Pipeline Risk Level</span>
+                            <span><strong style="color: #f59e0b;">Medium</strong></span>
+                        </div>
+                        <div class="metric-row">
+                            <span>Recommended Actions</span>
+                            <span><strong>3 pending</strong></span>
+                        </div>
+                    </div>
+
+                    <div class="chart-container">
+                        <h3 class="chart-title">ROI Analysis</h3>
+                        <table class="lead-source-table">
+                            <thead>
+                                <tr>
+                                    <th>Channel</th>
+                                    <th>Investment</th>
+                                    <th>Revenue</th>
+                                    <th>ROI</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Trade Shows</td>
+                                    <td>$50K</td>
+                                    <td>$170K</td>
+                                    <td style="color: #10b981;">340%</td>
+                                </tr>
+                                <tr>
+                                    <td>Digital Marketing</td>
+                                    <td>$30K</td>
+                                    <td>$54K</td>
+                                    <td style="color: #10b981;">180%</td>
+                                </tr>
+                                <tr>
+                                    <td>Referral Program</td>
+                                    <td>$15K</td>
+                                    <td>$63K</td>
+                                    <td style="color: #10b981;">420%</td>
+                                </tr>
+                                <tr>
+                                    <td>Cold Outreach</td>
+                                    <td>$25K</td>
+                                    <td>$30K</td>
+                                    <td style="color: #f59e0b;">120%</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        // Tab switching functionality
+        document.querySelectorAll('.nav-tab').forEach(tab => {
+            tab.addEventListener('click', function() {
+                // Remove active class from all tabs
+                document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
+                // Add active class to clicked tab
+                this.classList.add('active');
+                
+                // Hide all tab content
+                document.querySelectorAll('.tab-content').forEach(content => {
+                    content.style.display = 'none';
+                });
+                
+                // Show selected tab content
+                const tabName = this.getAttribute('data-tab');
+                document.getElementById(tabName + '-tab').style.display = 'block';
+            });
+        });
+
+        // Simulate real-time updates
+        function updateKPIs() {
+            const kpiValues = document.querySelectorAll('.kpi-value');
+            kpiValues.forEach(kpi => {
+                if (kpi.textContent.includes('$')) {
+                    // Simulate small changes in monetary values
+                    const currentValue = parseFloat(kpi.textContent.replace(/[$MK,]/g, ''));
+                    const change = (Math.random() - 0.5) * 0.02; // ±1% change
+                    const newValue = currentValue * (1 + change);
+                    
+                    if (kpi.textContent.includes('M')) {
+                        kpi.textContent = '$' + newValue.toFixed(1) + 'M';
+                    } else if (kpi.textContent.includes('K')) {
+                        kpi.textContent = '$' + Math.round(newValue) + 'K';
+                    }
+                }
+            });
+        }
+
+        // Update every 30 seconds
+        setInterval(updateKPIs, 30000);
+
+        // Add hover effects to cards
+        document.querySelectorAll('.kpi-card, .chart-container, .status-card').forEach(card => {
+            card.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateY(-2px)';
+                this.style.boxShadow = '0 4px 12px rgba(0,0,0,0.15)';
+            });
+            
+            card.addEventListener('mouseleave', function() {
+                this.style.transform = 'translateY(0)';
+                this.style.boxShadow = '0 1px 3px rgba(0,0,0,0.1)';
+            });
+        });
+
+        // Add click effects to pipeline stages
+        document.querySelectorAll('.pipeline-number').forEach(stage => {
+            stage.addEventListener('click', function() {
+                alert('Drilling down to ' + this.parentElement.querySelector('div:nth-child(2)').textContent + ' details...');
+            });
+        });
+
+        // Simulate data refresh
+        function refreshData() {
+            // Add a subtle animation to indicate data refresh
+            document.querySelectorAll('.kpi-value').forEach(value => {
+                value.style.opacity = '0.7';
+                setTimeout(() => {
+                    value.style.opacity = '1';
+                }, 200);
+            });
+        }
+
+        // Refresh data every 5 minutes
+        setInterval(refreshData, 300000);
+
+        // Fiscal Year Functions
+        let currentFiscalYear = 2025;
+
+        function getFiscalYearDates(fiscalYear) {
+            // Fiscal year starts March 1st and ends February 28th (or 29th for leap years)
+            const startDate = new Date(fiscalYear - 1, 2, 1); // March 1st of previous calendar year
+            const endDate = new Date(fiscalYear, 1, 28); // February 28th of current calendar year
+            
+            // Check for leap year
+            if (fiscalYear % 4 === 0 && (fiscalYear % 100 !== 0 || fiscalYear % 400 === 0)) {
+                endDate.setDate(29); // February 29th for leap years
+            }
+            
+            return { startDate, endDate };
+        }
+
+        function getCurrentFiscalYear() {
+            const today = new Date();
+            const currentMonth = today.getMonth(); // 0-based (0 = January, 2 = March)
+            
+            if (currentMonth >= 2) { // March or later
+                return today.getFullYear() + 1;
+            } else { // January or February
+                return today.getFullYear();
+            }
+        }
+
+        function updateFiscalYear() {
+            const selectedYear = parseInt(document.getElementById('fiscalYear').value);
+            currentFiscalYear = selectedYear;
+            
+            // Update fiscal period indicator
+            updateFiscalPeriodDisplay();
+            
+            // Update all KPIs and charts with fiscal year data
+            updateFiscalYearKPIs();
+            updateFiscalYearCharts();
+            
+            // Show loading indicator
+            showLoadingIndicator();
+            
+            // Simulate data loading
+            setTimeout(() => {
+                hideLoadingIndicator();
+                updateLastUpdatedTime();
+            }, 1000);
+        }
+
+        function updateFiscalPeriodDisplay() {
+            const { startDate, endDate } = getFiscalYearDates(currentFiscalYear);
+            const startMonth = startDate.toLocaleDateString('en-US', { month: 'short', year: 'numeric' });
+            const endMonth = endDate.toLocaleDateString('en-US', { month: 'short', year: 'numeric' });
+            
+            const periodText = `FY ${currentFiscalYear} (${startMonth} - ${endMonth})`;
+            document.getElementById('currentFiscalPeriod').textContent = periodText;
+        }
+
+        function updateFiscalYearKPIs() {
+            const { startDate, endDate } = getFiscalYearDates(currentFiscalYear);
+            
+            // Update KPI values based on fiscal year
+            // This would typically fetch data from your backend API
+            // For demo purposes, we'll simulate different values
+            
+            const fiscalYearMultiplier = currentFiscalYear === 2025 ? 1.0 : 
+                                       currentFiscalYear === 2024 ? 0.85 : 1.15;
+            
+            // Update revenue KPIs
+            document.querySelectorAll('.kpi-value').forEach(kpi => {
+                if (kpi.textContent.includes('$')) {
+                    const baseValue = parseFloat(kpi.textContent.replace(/[$MK,]/g, ''));
+                    const newValue = baseValue * fiscalYearMultiplier;
+                    
+                    if (kpi.textContent.includes('M')) {
+                        kpi.textContent = '$' + newValue.toFixed(1) + 'M';
+                    } else if (kpi.textContent.includes('K')) {
+                        kpi.textContent = '$' + Math.round(newValue) + 'K';
+                    }
+                }
+            });
+        }
+
+        function updateFiscalYearCharts() {
+            // Update chart labels and data for fiscal year periods
+            // This would typically involve redrawing charts with new data
+            console.log(`Updating charts for FY ${currentFiscalYear}`);
+        }
+
+        function showLoadingIndicator() {
+            document.querySelectorAll('.kpi-value, .chart-container').forEach(element => {
+                element.style.opacity = '0.5';
+            });
+        }
+
+        function hideLoadingIndicator() {
+            document.querySelectorAll('.kpi-value, .chart-container').forEach(element => {
+                element.style.opacity = '1';
+            });
+        }
+
+        function updateLastUpdatedTime() {
+            const now = new Date();
+            const timeString = now.toLocaleTimeString('en-US', { 
+                hour12: true, 
+                hour: 'numeric', 
+                minute: '2-digit' 
+            });
+            document.getElementById('lastUpdated').textContent = timeString;
+        }
+
+        // Initialize fiscal year on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            currentFiscalYear = getCurrentFiscalYear();
+            document.getElementById('fiscalYear').value = currentFiscalYear;
+            updateLastUpdatedTime();
+            
+            // Set initial fiscal year display
+            updateFiscalYear();
+        });
+    </script>
+</body>
+</html>
