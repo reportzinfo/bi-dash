@@ -1,0 +1,16 @@
+[Unit]
+Description=ZXY Business Intelligence Dashboard
+After=network.target
+
+[Service]
+Type=forking
+User=www-data
+Group=www-data
+WorkingDirectory=/var/www/zxy-dashboard
+Environment=PATH=/var/www/zxy-dashboard/venv/bin
+ExecStart=/var/www/zxy-dashboard/venv/bin/gunicorn -w 4 -b 0.0.0.0:80 app:app --daemon
+ExecReload=/bin/kill -s HUP $MAINPID
+Restart=always
+
+[Install]
+WantedBy=multi-user.target

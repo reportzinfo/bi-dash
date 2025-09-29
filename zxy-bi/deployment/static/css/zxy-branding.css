@@ -1,0 +1,262 @@
+/* ZXY International Branding Styles */
+
+:root {
+    /* ZXY Brand Colors - Professional Blue Palette */
+    --zxy-primary: #1e3a8a;        /* Deep blue - primary brand color */
+    --zxy-primary-light: #3b82f6;   /* Medium blue */
+    --zxy-primary-dark: #1e40af;    /* Darker blue */
+    --zxy-secondary: #059669;       /* Green accent - sustainability focus */
+    --zxy-secondary-light: #10b981; /* Light green */
+    --zxy-accent: #f59e0b;          /* Amber - energy and innovation */
+    
+    /* Neutral Colors */
+    --zxy-gray-50: #f9fafb;
+    --zxy-gray-100: #f3f4f6;
+    --zxy-gray-200: #e5e7eb;
+    --zxy-gray-300: #d1d5db;
+    --zxy-gray-400: #9ca3af;
+    --zxy-gray-500: #6b7280;
+    --zxy-gray-600: #4b5563;
+    --zxy-gray-700: #374151;
+    --zxy-gray-800: #1f2937;
+    --zxy-gray-900: #111827;
+    
+    /* Success/Error Colors */
+    --zxy-success: #059669;
+    --zxy-warning: #f59e0b;
+    --zxy-error: #dc2626;
+    
+    /* Background Gradients */
+    --zxy-gradient-primary: linear-gradient(135deg, var(--zxy-primary) 0%, var(--zxy-primary-light) 50%, var(--zxy-primary-dark) 100%);
+    --zxy-gradient-secondary: linear-gradient(135deg, var(--zxy-secondary) 0%, var(--zxy-secondary-light) 100%);
+    --zxy-gradient-accent: linear-gradient(135deg, var(--zxy-accent) 0%, #fbbf24 100%);
+}
+
+/* Update main body background with ZXY branding */
+body {
+    background: var(--zxy-gradient-primary);
+    font-family: 'Segoe UI', 'Arial', sans-serif;
+}
+
+/* Header styling with ZXY branding */
+.header {
+    background: rgba(255, 255, 255, 0.98);
+    border-bottom: 3px solid var(--zxy-primary);
+}
+
+/* Logo section updates */
+.logo-section {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.logo-container {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.logo-svg {
+    height: 50px;
+    width: auto;
+}
+
+.company-info {
+    display: flex;
+    flex-direction: column;
+}
+
+.header-title {
+    color: var(--zxy-primary);
+    font-weight: 700;
+    font-size: 24px;
+    margin: 0;
+}
+
+.header-subtitle {
+    color: var(--zxy-gray-600);
+    font-size: 13px;
+    font-weight: 500;
+    margin: 2px 0 0 0;
+}
+
+.company-tagline {
+    color: var(--zxy-secondary);
+    font-size: 11px;
+    font-weight: 600;
+    margin: 1px 0 0 0;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+/* Navigation tabs with ZXY branding */
+.nav-tab {
+    border: 2px solid transparent;
+    background: rgba(255, 255, 255, 0.9);
+    color: var(--zxy-gray-700);
+}
+
+.nav-tab:hover {
+    border-color: var(--zxy-primary-light);
+    background: rgba(255, 255, 255, 1);
+    color: var(--zxy-primary);
+}
+
+.nav-tab.active {
+    background: var(--zxy-gradient-primary);
+    color: white;
+    border-color: var(--zxy-primary-dark);
+}
+
+/* KPI cards with ZXY branding */
+.kpi-card::before {
+    background: var(--zxy-gradient-primary);
+}
+
+.kpi-icon.sales { 
+    background: var(--zxy-gradient-primary); 
+}
+
+.kpi-icon.manufacturing { 
+    background: var(--zxy-gradient-secondary); 
+}
+
+.kpi-icon.logistics { 
+    background: var(--zxy-gradient-accent); 
+}
+
+.kpi-icon.financial { 
+    background: linear-gradient(45deg, var(--zxy-primary-dark), var(--zxy-primary)); 
+}
+
+/* Section titles */
+.section-title {
+    color: var(--zxy-primary);
+    border-bottom: 2px solid var(--zxy-primary-light);
+    padding-bottom: 8px;
+}
+
+/* Buttons and controls */
+.time-selector, .refresh-btn {
+    border: 2px solid var(--zxy-gray-300);
+    transition: all 0.3s ease;
+}
+
+.time-selector:hover, .refresh-btn:hover {
+    border-color: var(--zxy-primary);
+    box-shadow: 0 2px 8px rgba(30, 58, 138, 0.2);
+}
+
+.time-selector:focus, .refresh-btn:focus {
+    outline: none;
+    border-color: var(--zxy-primary);
+    box-shadow: 0 0 0 3px rgba(30, 58, 138, 0.1);
+}
+
+/* Live indicator */
+.live-indicator {
+    color: var(--zxy-secondary);
+}
+
+.live-dot {
+    background: var(--zxy-secondary);
+}
+
+/* Progress bars and fills */
+.progress-fill {
+    background: var(--zxy-gradient-primary);
+}
+
+.progress-fill.won {
+    background: var(--zxy-gradient-secondary);
+}
+
+/* Trend indicators */
+.trend-positive { 
+    color: var(--zxy-secondary); 
+}
+
+.trend-negative { 
+    color: var(--zxy-error); 
+}
+
+/* Cards and containers */
+.funnel-section, .chart-container, .pipeline-container {
+    background: rgba(255, 255, 255, 0.98);
+    border: 1px solid var(--zxy-gray-200);
+}
+
+/* Deal cards */
+.deal-card:hover {
+    border-color: var(--zxy-primary);
+    box-shadow: 0 4px 12px rgba(30, 58, 138, 0.15);
+}
+
+.deal-card.won {
+    background: rgba(5, 150, 105, 0.1);
+    border-color: var(--zxy-secondary);
+}
+
+/* Stage headers */
+.stage-header {
+    background: var(--zxy-gradient-primary);
+}
+
+/* Filter selectors */
+.filter-select {
+    border: 2px solid var(--zxy-gray-300);
+    transition: all 0.3s ease;
+}
+
+.filter-select:hover, .filter-select:focus {
+    border-color: var(--zxy-primary);
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(30, 58, 138, 0.1);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .logo-svg {
+        height: 40px;
+    }
+    
+    .header-title {
+        font-size: 20px;
+    }
+    
+    .header-subtitle {
+        font-size: 12px;
+    }
+    
+    .company-tagline {
+        font-size: 10px;
+    }
+}
+
+/* Accessibility improvements */
+@media (prefers-reduced-motion: reduce) {
+    .live-dot {
+        animation: none;
+    }
+    
+    .nav-tab, .time-selector, .refresh-btn, .deal-card {
+        transition: none;
+    }
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+    .header {
+        background: white;
+        border-bottom: 4px solid var(--zxy-primary);
+    }
+    
+    .nav-tab {
+        border-width: 3px;
+    }
+    
+    .kpi-card {
+        border: 2px solid var(--zxy-gray-400);
+    }
+}
