@@ -471,3 +471,133 @@ class DashboardDataModel:
             {'id': None, 'name': 'Pakistan'},
             {'id': None, 'name': 'Egypt'}
         ]
+
+    def get_customer_order_metrics(self) -> Dict[str, Any]:
+        """Get Customer Order metrics from zinfotrek database"""
+        try:
+            # Query for Customer Order data from the current fiscal year
+            query = """
+                SELECT 
+                    COUNT(DISTINCT co.CustomerOrderID) as order_count,
+                    COALESCE(SUM(co.TotalOrderValue), 0) as total_value,
+                    COALESCE(AVG(co.MarginPercentage), 0) as avg_margin,
+                    COALESCE(SUM(co.TotalQuantity), 0) as total_quantity
+                FROM zCustomer_Order co
+                INNER JOIN zFINANCIAL_YEAR fy ON co.FinancialYearID = fy.FinancialYearID
+                WHERE fy.IsActive = 1
+                    AND co.OrderStatus IN ('Active', 'Confirmed', 'Processing')
+            """
+            
+            result = self.db.execute_query(query)
+            
+            if not result.empty:
+                row = result.iloc[0]
+                return {
+                    'quantity': int(row['order_count']) if pd.notna(row['order_count']) else 0,
+                    'value': float(row['total_value']) if pd.notna(row['total_value']) else 0.0,
+                    'margin': float(row['avg_margin']) if pd.notna(row['avg_margin']) else 0.0,
+                    'total_quantity': int(row['total_quantity']) if pd.notna(row['total_quantity']) else 0
+                }
+            else:
+                return self._get_sample_customer_order_metrics()
+                
+        except Exception as e:
+            logger.error(f"Error fetching customer order metrics: {e}")
+            return self._get_sample_customer_order_metrics()
+
+    def _get_sample_customer_order_metrics(self) -> Dict[str, Any]:
+        """Fallback customer order metrics when database unavailable"""
+        return {
+            'quantity': 247,
+            'value': 12500000.0,  # $12.5M
+            'margin': 22.0,
+            'total_quantity': 1247850
+        }
+
+    def get_cpo_detailed_data(self, customer_name: str = None) -> List[Dict[str, Any]]:
+        """Get detailed CPO data using the provided complex query"""
+        try:
+            # Base query structure from the provided SQL
+            base_query = """
+                SELECT TOP 100
+                    c.CPOID, 
+                    emp.EmployeeNumber, 
+                    dept.DepartmentName, 
+                    div.DivisionName, 
+                    co.CountryOfficeName, 
+                    c.CPODate, 
+                    c.RecordStatus, 
+                    c.CustomerOrderNumber,
+                    cst.CPOStyleQuantity, 
+                    cst.CPOStyleValue, 
+                    cst.FPOStyleQuantity, 
+                    cst.FPOStyleValue,
+                    sku.CPOSKUCustomerPrice, 
+                    sku.CPOSKUQuantity, 
+                    sku.FPOSKUQuantity,
+                    sku.FPOSKUVendorPrice, 
+                    cust.CustomerName, 
+                    style.StyleCode, 
+                    style.CustomerStyleNumber,
+                    style.StyleName, 
+                    style.StyleDescription, 
+                    colour.ColourName,
+                    fabric.FabricName, 
+                    fabric.Composition, 
+                    brand.MasterValue AS Brand, 
+                    style.CollectionNumber
+                FROM zCPO c
+                INNER JOIN zCPO_STYLE cst ON c.CPOID = cst.CPOID
+                INNER JOIN zCPO_SKU sku ON cst.CPOStyleID = sku.CPOStyleID
+                INNER JOIN zCUSTOMER cust ON c.CustomerID = cust.CustomerID
+                INNER JOIN zSTYLE style ON cst.StyleID = style.StyleID
+                INNER JOIN zCOLOUR colour ON sku.ColourID = colour.ColourID
+                INNER JOIN zFABRIC fabric ON colour.FabricID = fabric.FabricID
+                LEFT JOIN zMASTER_DETAIL brand ON style.BrandID = brand.MasterDetailID
+                LEFT JOIN zUSER usr ON c.CreatedByUserID = usr.UserID
+                LEFT JOIN zEMPLOYEE emp ON usr.EmployeeID = emp.EmployeeID
+                LEFT JOIN zORGANISATION_STRUCTURE org ON emp.DefaultOrgStructureID = org.OrganisationStructureID
+                LEFT JOIN zDEPARTMENT dept ON org.DepartmentID = dept.DepartmentID
+                LEFT JOIN zDIVISION div ON org.DivisionID = div.DivisionID
+                LEFT JOIN zCOUNTRY_OFFICE co ON org.CountryOfficeID = co.CountryOfficeID
+                WHERE c.RecordStatus = 'Active'
+            """
+            
+            # Add customer filter if specified
+            if customer_name:
+                base_query += f" AND cust.CustomerName = '{customer_name}'"
+            
+            # Add ordering
+            base_query += " ORDER BY c.CPODate DESC"
+            
+            result = self.db.execute_query(base_query)
+            
+            cpo_data = []
+            for _, row in result.iterrows():
+                cpo_record = {
+                    'cpo_id': row['CPOID'] if pd.notna(row['CPOID']) else None,
+                    'employee_number': row['EmployeeNumber'] if pd.notna(row['EmployeeNumber']) else '',
+                    'department': row['DepartmentName'] if pd.notna(row['DepartmentName']) else '',
+                    'division': row['DivisionName'] if pd.notna(row['DivisionName']) else '',
+                    'country_office': row['CountryOfficeName'] if pd.notna(row['CountryOfficeName']) else '',
+                    'cpo_date': row['CPODate'].strftime('%Y-%m-%d') if pd.notna(row['CPODate']) else '',
+                    'record_status': row['RecordStatus'] if pd.notna(row['RecordStatus']) else '',
+                    'customer_order_number': row['CustomerOrderNumber'] if pd.notna(row['CustomerOrderNumber']) else '',
+                    'cpo_style_quantity': int(row['CPOStyleQuantity']) if pd.notna(row['CPOStyleQuantity']) else 0,
+                    'cpo_style_value': float(row['CPOStyleValue']) if pd.notna(row['CPOStyleValue']) else 0.0,
+                    'fpo_style_quantity': int(row['FPOStyleQuantity']) if pd.notna(row['FPOStyleQuantity']) else 0,
+                    'fpo_style_value': float(row['FPOStyleValue']) if pd.notna(row['FPOStyleValue']) else 0.0,
+                    'customer_name': row['CustomerName'] if pd.notna(row['CustomerName']) else '',
+                    'style_code': row['StyleCode'] if pd.notna(row['StyleCode']) else '',
+                    'style_name': row['StyleName'] if pd.notna(row['StyleName']) else '',
+                    'colour_name': row['ColourName'] if pd.notna(row['ColourName']) else '',
+                    'fabric_name': row['FabricName'] if pd.notna(row['FabricName']) else '',
+                    'brand': row['Brand'] if pd.notna(row['Brand']) else ''
+                }
+                cpo_data.append(cpo_record)
+            
+            return cpo_data if cpo_data else []
+            
+        except Exception as e:
+            logger.error(f"Error fetching CPO detailed data: {e}")
+            return []

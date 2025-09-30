@@ -270,6 +270,34 @@ def get_countries():
             {'id': None, 'name': 'Egypt'}
         ])
 
+@app.route('/api/customer-order-metrics')
+def get_customer_order_metrics():
+    """API endpoint for customer order metrics"""
+    try:
+        metrics = dashboard_data.get_customer_order_metrics()
+        logger.info(f"Retrieved customer order metrics from database")
+        return jsonify(metrics)
+    except Exception as e:
+        logger.error(f"Error fetching customer order metrics: {e}")
+        return jsonify({
+            'quantity': 247,
+            'value': 12500000.0,
+            'margin': 22.0,
+            'total_quantity': 1247850
+        })
+
+@app.route('/api/cpo-detailed-data')
+def get_cpo_detailed_data():
+    """API endpoint for detailed CPO data"""
+    try:
+        customer_name = request.args.get('customer_name')
+        cpo_data = dashboard_data.get_cpo_detailed_data(customer_name)
+        logger.info(f"Retrieved {len(cpo_data)} CPO records from database")
+        return jsonify(cpo_data)
+    except Exception as e:
+        logger.error(f"Error fetching CPO detailed data: {e}")
+        return jsonify([])
+
 @app.errorhandler(404)
 def not_found(error):
     """Handle 404 errors"""

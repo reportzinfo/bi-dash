@@ -13,7 +13,7 @@
 
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 50%, #1e3c72 100%);
             min-height: 100vh;
             color: #333;
         }
@@ -25,12 +25,13 @@
         }
 
         .header {
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
-            border-radius: 15px;
-            padding: 20px 30px;
-            margin-bottom: 25px;
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            background: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(15px);
+            border-radius: 20px;
+            padding: 25px 35px;
+            margin-bottom: 30px;
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
+            border: 1px solid rgba(255, 255, 255, 0.3);
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -43,22 +44,41 @@
         }
 
         .logo {
-            width: 50px;
-            height: 50px;
-            background: linear-gradient(45deg, #667eea, #764ba2);
-            border-radius: 12px;
+            width: 60px;
+            height: 60px;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 15px;
             display: flex;
             align-items: center;
             justify-content: center;
-            color: white;
-            font-weight: bold;
-            font-size: 18px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+            border: 2px solid rgba(255, 255, 255, 0.8);
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            padding: 8px;
+        }
+
+        .logo-image {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            border-radius: 8px;
+        }
+
+        .logo:hover {
+            transform: scale(1.05);
+            box-shadow: 0 12px 35px rgba(0, 0, 0, 0.15);
         }
 
         .header-title {
-            font-size: 24px;
-            font-weight: 600;
-            color: #2c3e50;
+            font-size: 28px;
+            font-weight: 700;
+            background: linear-gradient(135deg, #1e3c72, #2a5298);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            letter-spacing: 0.5px;
         }
 
         .header-subtitle {
@@ -84,8 +104,8 @@
         }
 
         .time-selector:hover, .refresh-btn:hover {
-            border-color: #667eea;
-            box-shadow: 0 2px 8px rgba(102, 126, 234, 0.2);
+            border-color: #2a5298;
+            box-shadow: 0 2px 8px rgba(42, 82, 152, 0.3);
         }
 
         .live-indicator {
@@ -139,9 +159,9 @@
         }
 
         .nav-tab.active {
-            background: linear-gradient(45deg, #667eea, #764ba2);
+            background: linear-gradient(135deg, #1e3c72, #2a5298);
             color: white;
-            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+            box-shadow: 0 4px 15px rgba(30, 60, 114, 0.4);
         }
 
         .kpi-banner {
@@ -251,7 +271,7 @@
             background: rgba(255, 255, 255, 0.95);
             backdrop-filter: blur(10px);
             border-radius: 15px;
-            padding: 30px;
+            padding: 10px;
             box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
         }
 
@@ -269,7 +289,7 @@
             display: flex;
             align-items: center;
             justify-content: space-between;
-            margin-bottom: 30px;
+            margin-bottom: 10px;
         }
 
         .funnel-stage {
@@ -307,12 +327,116 @@
             font-weight: 500;
         }
 
+
+
+        /* Detailed Funnel Styles */
+        .detailed-funnel-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 15px;
+            margin-bottom: 10px;
+            overflow-x: auto;
+            padding: 10px 0;
+        }
+
+        .detailed-funnel-stage {
+            background: linear-gradient(135deg, rgba(30, 60, 114, 0.9), rgba(42, 82, 152, 0.9));
+            border-radius: 12px;
+            padding: 20px;
+            min-width: 200px;
+            flex: 1;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .detailed-funnel-stage:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12);
+        }
+
+        .stage-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .stage-title {
+            font-size: 14px;
+            font-weight: 600;
+            color: white;
+        }
+
+        .stage-rate {
+            font-size: 12px;
+            color: white;
+            font-weight: 600;
+            background: rgba(39, 174, 96, 0.3);
+            padding: 4px 8px;
+            border-radius: 6px;
+        }
+
+        .stage-metrics {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .stage-metric {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .stage-metric .metric-value {
+            font-size: 16px;
+            font-weight: 700;
+            color: white;
+        }
+
+        .stage-metric .metric-label {
+            font-size: 11px;
+            color: rgba(255, 255, 255, 0.8);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .funnel-arrow {
+            font-size: 24px;
+            color: #bdc3c7;
+            font-weight: bold;
+            margin: 0 10px;
+            flex-shrink: 0;
+        }
+
+        /* Responsive design for smaller screens */
+        @media (max-width: 768px) {
+            .detailed-funnel-container {
+                flex-direction: column;
+                gap: 20px;
+            }
+            
+            .funnel-arrow {
+                transform: rotate(90deg);
+                margin: 10px 0;
+            }
+            
+            .detailed-funnel-stage {
+                min-width: 100%;
+            }
+        }
+
         .alerts-section {
             background: rgba(255, 255, 255, 0.95);
             backdrop-filter: blur(10px);
             border-radius: 15px;
             padding: 25px;
             box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            margin-top: 30px;
         }
 
         .alert-item {
@@ -369,6 +493,7 @@
             border-radius: 15px;
             padding: 25px;
             box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            margin-top: 30px;
             margin-bottom: 25px;
         }
 
@@ -715,23 +840,23 @@
         }
 
         .ai-action-btn.primary {
-            background: linear-gradient(135deg, #4A90E2, #357ABD);
+            background: linear-gradient(135deg, #1e3c72, #2a5298);
             color: white;
         }
 
         .ai-action-btn.primary:hover {
-            background: linear-gradient(135deg, #357ABD, #2E6DA4);
+            background: linear-gradient(135deg, #2a5298, #1e3c72);
             transform: translateY(-1px);
         }
 
         .ai-action-btn.secondary {
-            background: rgba(74, 144, 226, 0.1);
-            color: #4A90E2;
-            border: 1px solid rgba(74, 144, 226, 0.3);
+            background: rgba(30, 60, 114, 0.1);
+            color: #1e3c72;
+            border: 1px solid rgba(30, 60, 114, 0.3);
         }
 
         .ai-action-btn.secondary:hover {
-            background: rgba(74, 144, 226, 0.2);
+            background: rgba(30, 60, 114, 0.2);
             transform: translateY(-1px);
         }
 
@@ -775,6 +900,129 @@
         .ai-send-btn:hover {
             background: linear-gradient(135deg, #357ABD, #2E6DA4);
             transform: scale(1.05);
+        }
+
+        /* Floating AI Insights Window */
+        .ai-floating-window {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0.9);
+            width: 90%;
+            max-width: 500px;
+            max-height: 80vh;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.98), rgba(240, 248, 255, 0.98));
+            backdrop-filter: blur(20px);
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(74, 144, 226, 0.3);
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            overflow: hidden;
+        }
+
+        .ai-floating-window.show {
+            opacity: 1;
+            visibility: visible;
+            transform: translate(-50%, -50%) scale(1);
+        }
+
+        .ai-floating-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 20px 25px;
+            border-bottom: 1px solid rgba(74, 144, 226, 0.2);
+            background: linear-gradient(135deg, rgba(74, 144, 226, 0.1), rgba(240, 248, 255, 0.1));
+        }
+
+        .ai-floating-title {
+            display: flex;
+            align-items: center;
+            font-size: 18px;
+            font-weight: 600;
+            color: #2c3e50;
+            margin: 0;
+        }
+
+        .ai-floating-title .ai-icon {
+            margin-right: 12px;
+        }
+
+        .ai-close-btn {
+            background: rgba(74, 144, 226, 0.1);
+            border: none;
+            border-radius: 50%;
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            color: #4A90E2;
+        }
+
+        .ai-close-btn:hover {
+            background: rgba(74, 144, 226, 0.2);
+            transform: scale(1.1);
+        }
+
+        .ai-floating-content {
+            padding: 25px;
+            max-height: calc(80vh - 120px);
+            overflow-y: auto;
+        }
+
+        .ai-floating-backdrop {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(5px);
+            z-index: 999;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .ai-floating-backdrop.show {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        /* AI Trigger Button */
+        .ai-trigger-btn {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #1e3c72, #2a5298);
+            border: none;
+            border-radius: 50%;
+            color: white;
+            font-size: 24px;
+            cursor: pointer;
+            box-shadow: 0 8px 25px rgba(30, 60, 114, 0.4);
+            transition: all 0.3s ease;
+            z-index: 998;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .ai-trigger-btn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 12px 35px rgba(30, 60, 114, 0.6);
+        }
+
+        .ai-trigger-btn:active {
+            transform: scale(0.95);
         }
 
         .filters-panel {
@@ -870,6 +1118,29 @@
             color: #2c3e50;
             font-size: 18px;
             font-weight: 600;
+        }
+
+        .chart-title {
+            margin: 0;
+            color: #2c3e50;
+            font-size: 16px;
+            font-weight: 600;
+        }
+
+        /* Customer Matrix Section */
+        .customer-matrix-section {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            margin-top: 30px;
+            margin-bottom: 25px;
+        }
+
+        .chart-visualization {
+            position: relative;
+            margin: 20px 0;
         }
 
         .chart-legend {
@@ -1609,9 +1880,11 @@
         <!-- Header -->
         <header class="header">
             <div class="logo-section">
-                <div class="logo">ZXY</div>
+                <div class="logo">
+                    <img src="https://zinfotrek.zxyinternational.com/_next/image?url=https%3A%2F%2Ftinyurl.com%2F2oauxz4x&w=256&q=75" alt="ZXY Logo" class="logo-image">
+                </div>
                 <div>
-                    <div class="header-title"> Intelligence Dashboard</div>
+                    <div class="header-title">ZXY Intelligence Dashboard</div>
                     <div class="header-subtitle">End-to-End Business Visibility</div>
                 </div>
             </div>
@@ -1741,7 +2014,7 @@
                     <div class="kpi-content" style="display: flex; gap: 20px;">
                         <div style="flex: 1;">
                             <div class="kpi-value">$3.2M</div>
-                            <div class="kpi-label">Total FPO</div>
+                            <div class="kpi-label">ZXY Invoice</div>
                         </div>
                         <div style="flex: 1;">
                             <div class="kpi-value">$3.2M</div>
@@ -1755,7 +2028,102 @@
                     
                 </div>
             </div>
+                <div class="funnel-section">
+                    <h3 class="section-title">🔄 Scenario of current Fiscal Year</h3>
+                    <div class="detailed-funnel-container">
+                        <div class="detailed-funnel-stage">
+                            <div class="stage-header">
+                                <div class="stage-title">Customer Order</div>
+                                <!-- <div class="stage-rate"> 12,346,621</div> -->
+                            </div>
+                            <div class="stage-metrics">
+                                <div class="stage-metric">
+                                    <div class="metric-value">247</div>
+                                    <div class="metric-label">Quantity</div>
+                                </div>
+                                <div class="stage-metric">
+                                    <div class="metric-value">$12.5M</div>
+                                    <div class="metric-label">Value</div>
+                                </div>
+                                <div class="stage-metric">
+                                    <div class="metric-value">22%</div>
+                                    <div class="metric-label">Margin</div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="funnel-arrow">→</div>
+                        
+                        <div class="detailed-funnel-stage">
+                            <div class="stage-header">
+                                <div class="stage-title">Factory Order</div>
+                                <!-- <div class="stage-rate">10,146,621</div> -->
+                            </div>
+                            <div class="stage-metrics">
+                                <div class="stage-metric">
+                                    <div class="metric-value">89</div>
+                                    <div class="metric-label">Quantity</div>
+                                </div>
+                                <div class="stage-metric">
+                                    <div class="metric-value">$8.9M</div>
+                                    <div class="metric-label">Value</div>
+                                </div>
+                                <div class="stage-metric">
+                                    <div class="metric-value">19%</div>
+                                    <div class="metric-label">Margin</div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="funnel-arrow">→</div>
+                        
+                        <div class="detailed-funnel-stage">
+                            <div class="stage-header">
+                                <div class="stage-title">In Production</div>
+                                <!-- <div class="stage-rate">1,123,621</div> -->
+                            </div>
+                            <div class="stage-metrics">
+                                <div class="stage-metric">
+                                    <div class="metric-value">21</div>
+                                    <div class="metric-label">Quantity</div>
+                                </div>
+                                <div class="stage-metric">
+                                    <div class="metric-value">$6.2M</div>
+                                    <div class="metric-label">Value</div>
+                                </div>
+                                <div class="stage-metric">
+                                    <div class="metric-value">18%</div>
+                                    <div class="metric-label">Margin</div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="funnel-arrow">→</div>
+                        
+                        <div class="detailed-funnel-stage">
+                            <div class="stage-header">
+                                <div class="stage-title">Shipped</div>
+                                <!-- <div class="stage-rate">1,006,001</div> -->
+                            </div>
+                            <div class="stage-metrics">
+                                <div class="stage-metric">
+                                    <div class="metric-value">19</div>
+                                    <div class="metric-label">Quantity</div>
+                                </div>
+                                <div class="stage-metric">
+                                    <div class="metric-value">$5.8M</div>
+                                    <div class="metric-label">Value</div>
+                                </div>
+                                <div class="stage-metric">
+                                    <div class="metric-value">17%</div>
+                                    <div class="metric-label">Margin</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
 
+
+                </div>
             <!-- KPI Banner -->
             
 
@@ -1869,52 +2237,28 @@
                     </div>
                 </div>
 
-                <div class="funnel-section">
-                    <h3 class="section-title">🔄 Scenario of current Fiscal Year</h3>
-                    <div class="funnel-container">
-                        <div class="funnel-stage">
-                            <div class="funnel-number">247</div>
-                            <div class="funnel-label">Customer Order</div>
-                            <div class="funnel-rate">55%</div>
+
+                                    <!-- AI Floating Window Trigger -->
+                    <button class="ai-trigger-btn" onclick="toggleAIWindow()">
+                        🤖
+                    </button>
+
+                    <!-- AI Floating Window -->
+                    <div class="ai-floating-backdrop" id="aiBackdrop" onclick="closeAIWindow()"></div>
+                    <div class="ai-floating-window" id="aiWindow">
+                        <div class="ai-floating-header">
+                            <h4 class="ai-floating-title">
+                                <div class="ai-icon">🤖</div>
+                                AI Business Insights
+                            </h4>
+                            <button class="ai-close-btn" onclick="closeAIWindow()">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <line x1="18" y1="6" x2="6" y2="18"></line>
+                                    <line x1="6" y1="6" x2="18" y2="18"></line>
+                                </svg>
+                            </button>
                         </div>
-                        <div class="funnel-stage">
-                            <div class="funnel-number">89</div>
-                            <div class="funnel-label">Factory Order</div>
-                            <div class="funnel-rate">36%</div>
-                        </div>
-                        <div class="funnel-stage">
-                            <div class="funnel-number">21</div>
-                            <div class="funnel-label">In Production</div>
-                            <div class="funnel-rate">91%</div>
-                        </div>
-                        <div class="funnel-stage">
-                            <div class="funnel-number">19</div>
-                            <div class="funnel-label">Shipped</div>
-                            <div class="funnel-rate">90%</div>
-                        </div>
-                    </div>
-                                            <div class="funnel-metrics">
-                            <div class="metric-card" data-metric="conversion">
-                                <div class="metric-value">4.2%</div>
-                                <div class="metric-label">Overall Conversion</div>
-                            </div>
-                            <div class="metric-card" data-metric="cycle">
-                                <div class="metric-value">127 days</div>
-                                <div class="metric-label">Avg Cycle Time</div>
-                            </div>
-                            <div class="metric-card" data-metric="value">
-                                <div class="metric-value">$2.1M</div>
-                                <div class="metric-label">Pipeline Value</div>
-                            </div>
-                        </div>
-                    
-                    <!-- AI Prompt Card -->
-                    <div class="ai-prompt-card">
-                        <div class="ai-prompt-header">
-                            <div class="ai-icon">🤖</div>
-                            <h4 class="ai-prompt-title">AI Business Insights</h4>
-                        </div>
-                        <div class="ai-prompt-content">
+                        <div class="ai-floating-content">
                             <div class="ai-prompt-text">
                                 <p><strong>AI Analysis:</strong> Based on current funnel performance, I recommend focusing on improving the Customer Order to Factory Order conversion rate (currently 36%). Consider implementing automated follow-up sequences for prospects in the 48-72 hour window after initial contact.</p>
                             </div>
@@ -1923,20 +2267,89 @@
                                 <button class="ai-action-btn secondary">Ask AI</button>
                                 <button class="ai-action-btn secondary">Optimize Funnel</button>
                             </div>
+                            <div class="ai-prompt-input">
+                                <input type="text" placeholder="Ask AI about your business performance..." class="ai-input-field">
+                                <button class="ai-send-btn">
+                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <line x1="22" y1="2" x2="11" y2="13"></line>
+                                        <polygon points="22,2 15,22 11,13 2,9"></polygon>
+                                    </svg>
+                                </button>
+                            </div>
                         </div>
-                        <div class="ai-prompt-input">
-                            <input type="text" placeholder="Ask AI about your business performance..." class="ai-input-field">
-                            <button class="ai-send-btn">
-                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                    <line x1="22" y1="2" x2="11" y2="13"></line>
-                                    <polygon points="22,2 15,22 11,13 2,9"></polygon>
-                                </svg>
-                            </button>
+                    </div>
+                <!-- Customer Performance Matrix Section -->
+                <div class="customer-matrix-section">
+                    <h3 class="section-title">🎯 Customer Performance Matrix</h3>
+                    <div class="bubble-chart">
+                        <div class="chart-header">
+                            <h4 class="chart-title">Customer Value vs Satisfaction Analysis</h4>
+                            <div class="chart-legend">
+                                <span class="legend-item"><span class="legend-bubble high-value"></span>High Value (>$500K)</span>
+                                <span class="legend-item"><span class="legend-bubble medium-value"></span>Medium Value ($100K-$500K)</span>
+                                <span class="legend-item"><span class="legend-bubble low-value"></span>Low Value (<$100K)</span>
+                            </div>
+                        </div>
+                        
+                        <!-- Bubble Chart Visualization -->
+                        <div class="chart-visualization">
+                            <svg class="customer-bubble-chart" viewBox="0 0 800 400" xmlns="http://www.w3.org/2000/svg">
+                                <!-- Grid lines for reference -->
+                                <defs>
+                                    <pattern id="grid" width="50" height="50" patternUnits="userSpaceOnUse">
+                                        <path d="M 50 0 L 0 0 0 50" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="1"/>
+                                    </pattern>
+                                </defs>
+                                <rect width="100%" height="100%" fill="url(#grid)" />
+                                
+                                <!-- Axis labels -->
+                                <text x="400" y="390" text-anchor="middle" fill="#7f8c8d" font-size="12">Customer Value ($)</text>
+                                <text x="20" y="200" text-anchor="middle" fill="#7f8c8d" font-size="12" transform="rotate(-90 20 200)">Satisfaction (%)</text>
+                                
+                                <!-- Customer bubbles -->
+                                <circle cx="650" cy="80" r="18" fill="rgba(46, 204, 113, 0.7)" stroke="#2ecc71" stroke-width="2" 
+                                        class="customer-bubble" data-customer="Walmart" data-value="850000" data-satisfaction="92" data-orders="89"/>
+                                <circle cx="620" cy="100" r="16" fill="rgba(46, 204, 113, 0.7)" stroke="#2ecc71" stroke-width="2" 
+                                        class="customer-bubble" data-customer="Target" data-value="720000" data-satisfaction="88" data-orders="67"/>
+                                <circle cx="580" cy="120" r="15" fill="rgba(52, 152, 219, 0.7)" stroke="#3498db" stroke-width="2" 
+                                        class="customer-bubble" data-customer="H&M" data-value="650000" data-satisfaction="85" data-orders="45"/>
+                                <circle cx="520" cy="140" r="14" fill="rgba(52, 152, 219, 0.7)" stroke="#3498db" stroke-width="2" 
+                                        class="customer-bubble" data-customer="Zara" data-value="580000" data-satisfaction="82" data-orders="38"/>
+                                <circle cx="480" cy="160" r="13" fill="rgba(52, 152, 219, 0.7)" stroke="#3498db" stroke-width="2" 
+                                        class="customer-bubble" data-customer="Marks & Spencer" data-value="520000" data-satisfaction="79" data-orders="32"/>
+                                <circle cx="420" cy="180" r="12" fill="rgba(52, 152, 219, 0.7)" stroke="#3498db" stroke-width="2" 
+                                        class="customer-bubble" data-customer="Uniqlo" data-value="450000" data-satisfaction="76" data-orders="28"/>
+                                <circle cx="380" cy="200" r="11" fill="rgba(52, 152, 219, 0.7)" stroke="#3498db" stroke-width="2" 
+                                        class="customer-bubble" data-customer="Gap" data-value="380000" data-satisfaction="73" data-orders="24"/>
+                                <circle cx="320" cy="220" r="10" fill="rgba(241, 196, 15, 0.7)" stroke="#f1c40f" stroke-width="2" 
+                                        class="customer-bubble" data-customer="JCPenney" data-value="280000" data-satisfaction="70" data-orders="18"/>
+                                <circle cx="280" cy="240" r="9" fill="rgba(241, 196, 15, 0.7)" stroke="#f1c40f" stroke-width="2" 
+                                        class="customer-bubble" data-customer="Macy's" data-value="220000" data-satisfaction="67" data-orders="15"/>
+                                <circle cx="200" cy="280" r="8" fill="rgba(241, 196, 15, 0.7)" stroke="#f1c40f" stroke-width="2" 
+                                        class="customer-bubble" data-customer="Kohl's" data-value="150000" data-satisfaction="58" data-orders="12"/>
+                            </svg>
+                            
+                            <!-- Tooltip for bubble chart -->
+                            <div class="bubble-tooltip" id="bubbleTooltip"></div>
+                        </div>
+                        
+                        <div class="bubble-insights">
+                            <div class="insight-card">
+                                <div class="insight-title">Top Performers</div>
+                                <div class="insight-text">Walmart & Target show high value + satisfaction</div>
+                            </div>
+                            <div class="insight-card">
+                                <div class="insight-title">Growth Opportunity</div>
+                                <div class="insight-text">5 customers below 80% satisfaction need attention</div>
+                            </div>
+                            <div class="insight-card">
+                                <div class="insight-title">Risk Alert</div>
+                                <div class="insight-text">Kohl's: Low value + satisfaction - review relationship</div>
+                            </div>
                         </div>
                     </div>
                 </div>
-
-                <div class="alerts-section">
+                <!-- <div class="alerts-section">
                     <h3 class="section-title">⚡ Real-time Alerts & Insights</h3>
                     <div class="alert-item">
                         <div class="alert-icon alert-high">!</div>
@@ -1966,7 +2379,7 @@
                             <div class="alert-description">Türkiye facility compliance audit scheduled in 2 weeks. Preparation required.</div>
                         </div>
                     </div>
-                </div>
+                </div> -->
             </div>
 
             <!-- Charts Grid -->
@@ -2149,104 +2562,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="chart-container">
-                    <h3 class="section-title">🎯 Customer Performance Matrix</h3>
-                    <div class="bubble-chart">
-                        <div class="chart-header">
-                            <h3>Customer Value vs Satisfaction Analysis</h3>
-                            <div class="chart-legend">
-                                <span class="legend-item"><span class="legend-bubble high-value"></span>High Value (>$500K)</span>
-                                <span class="legend-item"><span class="legend-bubble medium-value"></span>Medium Value ($100K-$500K)</span>
-                                <span class="legend-item"><span class="legend-bubble low-value"></span>Low Value (<$100K)</span>
-                            </div>
-                        </div>
-                        <div class="chart-container">
-                            <svg class="customer-bubble-chart" viewBox="0 0 800 400" xmlns="http://www.w3.org/2000/svg">
-                                <!-- Grid lines -->
-                                <defs>
-                                    <pattern id="bubbleGrid" width="80" height="40" patternUnits="userSpaceOnUse">
-                                        <path d="M 80 0 L 0 0 0 40" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="1"/>
-                                    </pattern>
-                                </defs>
-                                <rect width="800" height="400" fill="url(#bubbleGrid)" />
-                                
-                                <!-- Axes -->
-                                <line x1="60" y1="350" x2="750" y2="350" stroke="rgba(255,255,255,0.3)" stroke-width="2"/>
-                                <line x1="60" y1="350" x2="60" y2="50" stroke="rgba(255,255,255,0.3)" stroke-width="2"/>
-                                
-                                <!-- X-axis labels (Customer Value) -->
-                                <text x="150" y="375" fill="rgba(255,255,255,0.7)" font-size="12" text-anchor="middle">$100K</text>
-                                <text x="250" y="375" fill="rgba(255,255,255,0.7)" font-size="12" text-anchor="middle">$300K</text>
-                                <text x="350" y="375" fill="rgba(255,255,255,0.7)" font-size="12" text-anchor="middle">$500K</text>
-                                <text x="450" y="375" fill="rgba(255,255,255,0.7)" font-size="12" text-anchor="middle">$700K</text>
-                                <text x="550" y="375" fill="rgba(255,255,255,0.7)" font-size="12" text-anchor="middle">$900K</text>
-                                <text x="650" y="375" fill="rgba(255,255,255,0.7)" font-size="12" text-anchor="middle">$1M+</text>
-                                <text x="400" y="395" fill="rgba(255,255,255,0.8)" font-size="14" text-anchor="middle" font-weight="bold">Annual Order Value</text>
-                                
-                                <!-- Y-axis labels (Satisfaction Score) -->
-                                <text x="45" y="320" fill="rgba(255,255,255,0.7)" font-size="12" text-anchor="end">60%</text>
-                                <text x="45" y="280" fill="rgba(255,255,255,0.7)" font-size="12" text-anchor="end">70%</text>
-                                <text x="45" y="240" fill="rgba(255,255,255,0.7)" font-size="12" text-anchor="end">80%</text>
-                                <text x="45" y="200" fill="rgba(255,255,255,0.7)" font-size="12" text-anchor="end">90%</text>
-                                <text x="45" y="160" fill="rgba(255,255,255,0.7)" font-size="12" text-anchor="end">95%</text>
-                                <text x="45" y="120" fill="rgba(255,255,255,0.7)" font-size="12" text-anchor="end">100%</text>
-                                <text x="25" y="200" fill="rgba(255,255,255,0.8)" font-size="14" text-anchor="middle" font-weight="bold" transform="rotate(-90 25 200)">Satisfaction Score</text>
-                                
-                                <!-- Customer bubbles -->
-                                <!-- High Value Customers -->
-                                <circle cx="580" cy="140" r="25" fill="rgba(46, 204, 113, 0.7)" stroke="#2ecc71" stroke-width="2" 
-                                        class="customer-bubble" data-customer="Walmart" data-value="1200000" data-satisfaction="96" data-orders="89"/>
-                                <circle cx="520" cy="160" r="22" fill="rgba(46, 204, 113, 0.7)" stroke="#2ecc71" stroke-width="2" 
-                                        class="customer-bubble" data-customer="Target" data-value="850000" data-satisfaction="94" data-orders="67"/>
-                                <circle cx="480" cy="180" r="20" fill="rgba(46, 204, 113, 0.7)" stroke="#2ecc71" stroke-width="2" 
-                                        class="customer-bubble" data-customer="H&M" data-value="720000" data-satisfaction="91" data-orders="45"/>
-                                
-                                <!-- Medium Value Customers -->
-                                <circle cx="320" cy="200" r="18" fill="rgba(52, 152, 219, 0.7)" stroke="#3498db" stroke-width="2" 
-                                        class="customer-bubble" data-customer="Marks & Spencer" data-value="450000" data-satisfaction="89" data-orders="32"/>
-                                <circle cx="280" cy="220" r="16" fill="rgba(52, 152, 219, 0.7)" stroke="#3498db" stroke-width="2" 
-                                        class="customer-bubble" data-customer="Zara" data-value="380000" data-satisfaction="87" data-orders="28"/>
-                                <circle cx="350" cy="240" r="15" fill="rgba(52, 152, 219, 0.7)" stroke="#3498db" stroke-width="2" 
-                                        class="customer-bubble" data-customer="Uniqlo" data-value="320000" data-satisfaction="85" data-orders="24"/>
-                                <circle cx="250" cy="260" r="14" fill="rgba(52, 152, 219, 0.7)" stroke="#3498db" stroke-width="2" 
-                                        class="customer-bubble" data-customer="Next" data-value="280000" data-satisfaction="82" data-orders="21"/>
-                                
-                                <!-- Low Value Customers -->
-                                <circle cx="180" cy="280" r="12" fill="rgba(241, 196, 15, 0.7)" stroke="#f1c40f" stroke-width="2" 
-                                        class="customer-bubble" data-customer="Myer" data-value="150000" data-satisfaction="79" data-orders="15"/>
-                                <circle cx="140" cy="300" r="10" fill="rgba(241, 196, 15, 0.7)" stroke="#f1c40f" stroke-width="2" 
-                                        class="customer-bubble" data-customer="Hudson Bay" data-value="120000" data-satisfaction="76" data-orders="12"/>
-                                <circle cx="200" cy="320" r="9" fill="rgba(241, 196, 15, 0.7)" stroke="#f1c40f" stroke-width="2" 
-                                        class="customer-bubble" data-customer="Debenhams" data-value="95000" data-satisfaction="73" data-orders="8"/>
-                                <circle cx="160" cy="340" r="8" fill="rgba(231, 76, 60, 0.7)" stroke="#e74c3c" stroke-width="2" 
-                                        class="customer-bubble" data-customer="Kohl's" data-value="75000" data-satisfaction="68" data-orders="6"/>
-                                
-                                <!-- Customer labels -->
-                                <text x="580" y="145" fill="white" font-size="10" text-anchor="middle" font-weight="bold">WMT</text>
-                                <text x="520" y="165" fill="white" font-size="10" text-anchor="middle" font-weight="bold">TGT</text>
-                                <text x="480" y="185" fill="white" font-size="9" text-anchor="middle" font-weight="bold">H&M</text>
-                                <text x="320" y="205" fill="white" font-size="9" text-anchor="middle" font-weight="bold">M&S</text>
-                                <text x="280" y="225" fill="white" font-size="8" text-anchor="middle" font-weight="bold">ZRA</text>
-                                <text x="350" y="245" fill="white" font-size="8" text-anchor="middle" font-weight="bold">UNI</text>
-                            </svg>
-                            <div class="bubble-tooltip" id="bubble-tooltip"></div>
-                        </div>
-                        <div class="bubble-insights">
-                            <div class="insight-card">
-                                <div class="insight-title">Top Performers</div>
-                                <div class="insight-text">Walmart & Target show high value + satisfaction</div>
-                            </div>
-                            <div class="insight-card">
-                                <div class="insight-title">Growth Opportunity</div>
-                                <div class="insight-text">5 customers below 80% satisfaction need attention</div>
-                            </div>
-                            <div class="insight-card">
-                                <div class="insight-title">Risk Alert</div>
-                                <div class="insight-text">Kohl's: Low value + satisfaction - review relationship</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+
                 <div class="chart-container">
                     <h3 class="section-title">🔮 AI-Powered Forecasting</h3>
                     <div class="predictive-analytics">
@@ -3051,11 +3367,11 @@
             }
         }
 
-        // Update KPIs every 30 seconds
-        setInterval(() => {
-            updateKPIs();
-            updateFunnelMetrics();
-        }, 30000);
+        // Update KPIs every 30 seconds (disabled to prevent automatic value changes)
+        // setInterval(() => {
+        //     updateKPIs();
+        //     updateFunnelMetrics();
+        // }, 30000);
 
         // Add hover effects to cards
         document.querySelectorAll('.kpi-card, .chart-container').forEach(card => {
@@ -3074,17 +3390,17 @@
             btn.style.transform = 'rotate(360deg)';
             btn.style.transition = 'transform 0.5s ease';
             
-            setTimeout(() => {
-                btn.style.transform = 'rotate(0deg)';
-                updateKPIs();
-                updateFunnelMetrics();
-            }, 500);
+            // setTimeout(() => {
+            //     btn.style.transform = 'rotate(0deg)';
+            //     // updateKPIs();
+            //     // updateFunnelMetrics(); // Disabled to prevent value changes
+            // }, 500);
         });
 
         // Bubble Chart Functions
         function initializeBubbleChart() {
             const bubbles = document.querySelectorAll('.customer-bubble');
-            const tooltip = document.getElementById('bubble-tooltip');
+            const tooltip = document.getElementById('bubbleTooltip');
             
             bubbles.forEach(bubble => {
                 bubble.addEventListener('mouseenter', (e) => {
@@ -3617,12 +3933,53 @@
                 });
         }
 
+        // Customer Order Functions
+        function loadCustomerOrderMetrics() {
+            fetch('/api/customer-order-metrics')
+                .then(response => response.json())
+                .then(data => {
+                    console.log('Customer order metrics received:', data);
+                    updateCustomerOrderDisplay(data);
+                })
+                .catch(error => {
+                    console.error('Error loading customer order metrics:', error);
+                });
+        }
+
+        function updateCustomerOrderDisplay(metrics) {
+            // Update Customer Order stage in the funnel
+            const customerOrderStage = document.querySelector('.detailed-funnel-stage:first-child');
+            if (customerOrderStage) {
+                // Update quantity
+                const quantityValue = customerOrderStage.querySelector('.stage-metric:nth-child(1) .metric-value');
+                if (quantityValue) {
+                    quantityValue.textContent = metrics.quantity.toLocaleString();
+                }
+                
+                // Update value
+                const valueElement = customerOrderStage.querySelector('.stage-metric:nth-child(2) .metric-value');
+                if (valueElement) {
+                    const valueInMillions = (metrics.value / 1000000).toFixed(1);
+                    valueElement.textContent = `$${valueInMillions}M`;
+                }
+                
+                // Update margin
+                const marginElement = customerOrderStage.querySelector('.stage-metric:nth-child(3) .metric-value');
+                if (marginElement) {
+                    marginElement.textContent = `${metrics.margin.toFixed(1)}%`;
+                }
+            }
+            
+            // Note: Order Quantity metric card data-attribute removed as requested
+        }
+
         // Initialize dashboard
         document.addEventListener('DOMContentLoaded', () => {
             console.log('ZXY Unified Dashboard Loaded');
             loadFinancialYears();
             loadCountries();
             loadCustomerGroups();
+            loadCustomerOrderMetrics();
             updateKPIs();
             initializeFunnel();
             initializeBubbleChart();
@@ -3637,6 +3994,49 @@
 
             // Update model metrics every 30 seconds
             setInterval(updateModelMetrics, 30000);
+        });
+
+        // AI Floating Window Functions
+        function toggleAIWindow() {
+            const window = document.getElementById('aiWindow');
+            const backdrop = document.getElementById('aiBackdrop');
+            
+            if (window.classList.contains('show')) {
+                closeAIWindow();
+            } else {
+                openAIWindow();
+            }
+        }
+
+        function openAIWindow() {
+            const window = document.getElementById('aiWindow');
+            const backdrop = document.getElementById('aiBackdrop');
+            
+            backdrop.classList.add('show');
+            window.classList.add('show');
+            
+            // Focus on input field when window opens
+            setTimeout(() => {
+                const inputField = window.querySelector('.ai-input-field');
+                if (inputField) {
+                    inputField.focus();
+                }
+            }, 300);
+        }
+
+        function closeAIWindow() {
+            const window = document.getElementById('aiWindow');
+            const backdrop = document.getElementById('aiBackdrop');
+            
+            window.classList.remove('show');
+            backdrop.classList.remove('show');
+        }
+
+        // Close window with Escape key
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'Escape') {
+                closeAIWindow();
+            }
         });
     </script>
 </body>
