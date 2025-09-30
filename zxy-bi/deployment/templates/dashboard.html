@@ -627,6 +627,276 @@
             background: rgba(155, 89, 182, 0.2);
         }
 
+        /* Data Table Styles */
+        .data-table-section {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            margin-top: 30px;
+            margin-bottom: 25px;
+        }
+
+        .table-controls {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .table-search {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex: 1;
+            min-width: 300px;
+        }
+
+        .search-input {
+            flex: 1;
+            padding: 10px 15px;
+            border: 2px solid #e1e8ed;
+            border-radius: 8px;
+            font-size: 14px;
+            transition: all 0.3s ease;
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: #2a5298;
+            box-shadow: 0 0 0 3px rgba(42, 82, 152, 0.1);
+        }
+
+        .search-btn {
+            padding: 10px 15px;
+            background: linear-gradient(135deg, #1e3c72, #2a5298);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .search-btn:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(30, 60, 114, 0.3);
+        }
+
+        .table-filters {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+        }
+
+        .filter-select {
+            padding: 10px 15px;
+            border: 2px solid #e1e8ed;
+            border-radius: 8px;
+            background: white;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .filter-select:focus {
+            outline: none;
+            border-color: #2a5298;
+        }
+
+        .table-container {
+            overflow-x: auto;
+            border-radius: 10px;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+        }
+
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+            font-size: 14px;
+        }
+
+        .data-table th {
+            background: linear-gradient(135deg, #1e3c72, #2a5298);
+            color: white;
+            padding: 15px 12px;
+            text-align: left;
+            font-weight: 600;
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+
+        .data-table th.sortable {
+            cursor: pointer;
+            user-select: none;
+            transition: background 0.3s ease;
+        }
+
+        .data-table th.sortable:hover {
+            background: linear-gradient(135deg, #2a5298, #1e3c72);
+        }
+
+        .data-table th.sortable::after {
+            content: ' ↕';
+            opacity: 0.5;
+            font-size: 12px;
+        }
+
+        .data-table th.sort-asc::after {
+            content: ' ↑';
+            opacity: 1;
+        }
+
+        .data-table th.sort-desc::after {
+            content: ' ↓';
+            opacity: 1;
+        }
+
+        .data-table td {
+            padding: 12px;
+            border-bottom: 1px solid #e1e8ed;
+            transition: background 0.3s ease;
+        }
+
+        .data-table tr:hover {
+            background: rgba(42, 82, 152, 0.05);
+        }
+
+        .data-table tr:nth-child(even) {
+            background: rgba(248, 249, 250, 0.5);
+        }
+
+        .data-table tr:nth-child(even):hover {
+            background: rgba(42, 82, 152, 0.08);
+        }
+
+        .data-table .order-value {
+            font-weight: 600;
+            color: #27ae60;
+        }
+
+        .data-table .order-quantity {
+            font-weight: 600;
+            color: #3498db;
+        }
+
+        .data-table .margin {
+            font-weight: 600;
+            padding: 4px 8px;
+            border-radius: 4px;
+        }
+
+        .data-table .margin.positive {
+            background: rgba(39, 174, 96, 0.1);
+            color: #27ae60;
+        }
+
+        .data-table .margin.negative {
+            background: rgba(231, 76, 60, 0.1);
+            color: #e74c3c;
+        }
+
+        .table-pagination {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid #e1e8ed;
+        }
+
+        .pagination-info {
+            color: #7f8c8d;
+            font-size: 14px;
+        }
+
+        .pagination-controls {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .pagination-btn {
+            padding: 8px 16px;
+            background: white;
+            border: 2px solid #e1e8ed;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 14px;
+        }
+
+        .pagination-btn:hover:not(:disabled) {
+            border-color: #2a5298;
+            background: rgba(42, 82, 152, 0.05);
+        }
+
+        .pagination-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .page-numbers {
+            display: flex;
+            gap: 5px;
+        }
+
+        .page-number {
+            padding: 8px 12px;
+            background: white;
+            border: 2px solid #e1e8ed;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 14px;
+        }
+
+        .page-number.active {
+            background: linear-gradient(135deg, #1e3c72, #2a5298);
+            color: white;
+            border-color: #2a5298;
+        }
+
+        .page-number:hover:not(.active) {
+            border-color: #2a5298;
+            background: rgba(42, 82, 152, 0.05);
+        }
+
+        /* Responsive Design for Data Table */
+        @media (max-width: 768px) {
+            .table-controls {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .table-search {
+                min-width: 100%;
+            }
+
+            .table-filters {
+                justify-content: space-between;
+            }
+
+            .data-table {
+                font-size: 12px;
+            }
+
+            .data-table th,
+            .data-table td {
+                padding: 8px 6px;
+            }
+
+            .table-pagination {
+                flex-direction: column;
+                gap: 15px;
+                text-align: center;
+            }
+        }
+
         .charts-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
@@ -1968,15 +2238,15 @@
                     
                     <div class="kpi-content" style="display: flex; gap: 20px;">
                         <div style="flex: 1;">
-                            <div class="kpi-value">$3.2M</div>
+                            <div class="kpi-value">$246.5M</div>
                             <div class="kpi-label">Order Recived</div>
                         </div>
                         <div style="flex: 1;">
-                            <div class="kpi-value">$3.2M</div>
+                            <div class="kpi-value">$30.2M</div>
                             <div class="kpi-label">Carry Forward</div>
                         </div>
                         <div style="flex: 1;">
-                            <div class="kpi-value">$3.2M</div>
+                            <div class="kpi-value">$51.2M</div>
                             <div class="kpi-label">Order In-hand</div>
                         </div>
                     </div>
@@ -1990,15 +2260,15 @@
                     
                     <div class="kpi-content" style="display: flex; gap: 20px;">
                         <div style="flex: 1;">
-                            <div class="kpi-value">$3.2M</div>
+                            <div class="kpi-value">$193.2M</div>
                             <div class="kpi-label">Order Recived</div>
                         </div>
                         <div style="flex: 1;">
-                            <div class="kpi-value">$3.2M</div>
+                            <div class="kpi-value">$32.2M</div>
                             <div class="kpi-label">Carry Forward</div>
                         </div>
                         <div style="flex: 1;">
-                            <div class="kpi-value">$3.2M</div>
+                            <div class="kpi-value">$31.2M</div>
                             <div class="kpi-label">Order In-hand</div>
                         </div>
                     </div>
@@ -2013,15 +2283,15 @@
                     
                     <div class="kpi-content" style="display: flex; gap: 20px;">
                         <div style="flex: 1;">
-                            <div class="kpi-value">$3.2M</div>
+                            <div class="kpi-value">$130.2M</div>
                             <div class="kpi-label">ZXY Invoice</div>
                         </div>
                         <div style="flex: 1;">
-                            <div class="kpi-value">$3.2M</div>
+                            <div class="kpi-value">$125.2M</div>
                             <div class="kpi-label">Shipped</div>
                         </div>
                         <div style="flex: 1;">
-                            <div class="kpi-value">$3.2M</div>
+                            <div class="kpi-value">$18.2M</div>
                             <div class="kpi-label">Margin</div>
                         </div>
                     </div>
@@ -3268,6 +3538,55 @@
                 </div>
             </div>
         </div>
+        
+        <!-- Data Table Section -->
+        <div class="data-table-section">
+            <h3 class="section-title">📊 Customer Orders Data Table</h3>
+            <div class="table-controls">
+                <div class="table-search">
+                    <input type="text" id="tableSearch" placeholder="Search customers, factories, or groups..." class="search-input">
+                    <button class="search-btn">🔍</button>
+                </div>
+                <div class="table-filters">
+                    <select id="customerGroupFilter" class="filter-select">
+                        <option value="">All Customer Groups</option>
+                    </select>
+                    <select id="sortBy" class="filter-select">
+                        <option value="orderValue">Sort by Order Value</option>
+                        <option value="orderQuantity">Sort by Quantity</option>
+                        <option value="margin">Sort by Margin</option>
+                        <option value="customerName">Sort by Customer</option>
+                    </select>
+                </div>
+            </div>
+            <div class="table-container">
+                <table class="data-table" id="dataTable">
+                    <thead>
+                        <tr>
+                            <th class="sortable" data-column="customerGroup">Customer Group</th>
+                            <th class="sortable" data-column="customerName">Customer Name</th>
+                            <th class="sortable" data-column="factoryName">Factory Name</th>
+                            <th class="sortable" data-column="orderValue">Order Value</th>
+                            <th class="sortable" data-column="orderQuantity">Order Quantity</th>
+                            <th class="sortable" data-column="margin">Margin</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tableBody">
+                        <!-- Data will be loaded here -->
+                    </tbody>
+                </table>
+            </div>
+            <div class="table-pagination">
+                <div class="pagination-info">
+                    <span id="paginationInfo">Showing 1-50 of 687 records</span>
+                </div>
+                <div class="pagination-controls">
+                    <button id="prevPage" class="pagination-btn">← Previous</button>
+                    <span id="pageNumbers" class="page-numbers"></span>
+                    <button id="nextPage" class="pagination-btn">Next →</button>
+                </div>
+            </div>
+        </div>
     </div>
 
     <script>
@@ -3341,31 +3660,7 @@
             }
         }
 
-        function updateFunnelMetrics() {
-            const totalProspects = funnelData.prospects.count;
-            const totalDelivered = funnelData.delivered.count;
-            const conversionRate = ((totalDelivered / totalProspects) * 100).toFixed(1);
-            
-            // Update conversion rate
-            const conversionElement = document.querySelector('[data-metric="conversion"] .metric-value');
-            if (conversionElement) {
-                conversionElement.textContent = conversionRate + '%';
-            }
 
-            // Simulate cycle time variation
-            const cycleTime = Math.floor(120 + Math.random() * 20);
-            const cycleElement = document.querySelector('[data-metric="cycle"] .metric-value');
-            if (cycleElement) {
-                cycleElement.textContent = cycleTime + ' days';
-            }
-
-            // Update pipeline value
-            const pipelineValue = (funnelData.prospects.value / 1000000).toFixed(1);
-            const valueElement = document.querySelector('[data-metric="value"] .metric-value');
-            if (valueElement) {
-                valueElement.textContent = '$' + pipelineValue + 'M';
-            }
-        }
 
         // Update KPIs every 30 seconds (disabled to prevent automatic value changes)
         // setInterval(() => {
@@ -3980,11 +4275,13 @@
             loadCountries();
             loadCustomerGroups();
             loadCustomerOrderMetrics();
+            loadTableData();
             updateKPIs();
             initializeFunnel();
             initializeBubbleChart();
             initializeAIInsights();
             initializeSalesPipeline();
+            initializeTableEventListeners();
             
             // Animate bubbles after a short delay
             setTimeout(() => {
@@ -4038,6 +4335,243 @@
                 closeAIWindow();
             }
         });
+
+        // Data Table Functions
+        let tableData = [];
+        let filteredData = [];
+        let currentPage = 1;
+        let rowsPerPage = 50;
+        let sortColumn = '';
+        let sortDirection = 'asc';
+
+        function loadTableData() {
+            fetch('/api/table-data')
+                .then(response => response.json())
+                .then(data => {
+                    console.log('Table data received:', data.length, 'records');
+                    tableData = data;
+                    filteredData = [...data];
+                    populateCustomerGroupFilter();
+                    renderTable();
+                    updatePagination();
+                })
+                .catch(error => {
+                    console.error('Error loading table data:', error);
+                });
+        }
+
+        function populateCustomerGroupFilter() {
+            const filter = document.getElementById('customerGroupFilter');
+            const groups = [...new Set(tableData.map(row => row['Customer Group']))].sort();
+            
+            // Clear existing options except "All"
+            filter.innerHTML = '<option value="">All Customer Groups</option>';
+            
+            groups.forEach(group => {
+                const option = document.createElement('option');
+                option.value = group;
+                option.textContent = group;
+                filter.appendChild(option);
+            });
+        }
+
+        function formatCurrency(value) {
+            return new Intl.NumberFormat('en-US', {
+                style: 'currency',
+                currency: 'USD',
+                minimumFractionDigits: 0,
+                maximumFractionDigits: 0
+            }).format(value);
+        }
+
+        function formatNumber(value) {
+            return new Intl.NumberFormat('en-US').format(value);
+        }
+
+        function renderTable() {
+            const tbody = document.getElementById('tableBody');
+            const startIndex = (currentPage - 1) * rowsPerPage;
+            const endIndex = startIndex + rowsPerPage;
+            const pageData = filteredData.slice(startIndex, endIndex);
+
+            tbody.innerHTML = '';
+
+            pageData.forEach(row => {
+                const tr = document.createElement('tr');
+                
+                const marginValue = parseFloat(row.Margin) || 0;
+                const marginClass = marginValue >= 0 ? 'positive' : 'negative';
+                
+                tr.innerHTML = `
+                    <td>${row['Customer Group'] || ''}</td>
+                    <td>${row.CustomerName || ''}</td>
+                    <td>${row.FactoryName || 'N/A'}</td>
+                    <td class="order-value">${formatCurrency(row['Order Value'] || 0)}</td>
+                    <td class="order-quantity">${formatNumber(row['Order Quantity'] || 0)}</td>
+                    <td class="margin ${marginClass}">${formatCurrency(marginValue)}</td>
+                `;
+                
+                tbody.appendChild(tr);
+            });
+        }
+
+        function updatePagination() {
+            const totalRecords = filteredData.length;
+            const totalPages = Math.ceil(totalRecords / rowsPerPage);
+            const startRecord = (currentPage - 1) * rowsPerPage + 1;
+            const endRecord = Math.min(currentPage * rowsPerPage, totalRecords);
+
+            // Update pagination info
+            document.getElementById('paginationInfo').textContent = 
+                `Showing ${startRecord}-${endRecord} of ${totalRecords} records`;
+
+            // Update pagination controls
+            const prevBtn = document.getElementById('prevPage');
+            const nextBtn = document.getElementById('nextPage');
+            
+            prevBtn.disabled = currentPage === 1;
+            nextBtn.disabled = currentPage === totalPages;
+
+            // Update page numbers
+            const pageNumbers = document.getElementById('pageNumbers');
+            pageNumbers.innerHTML = '';
+
+            const maxVisiblePages = 5;
+            let startPage = Math.max(1, currentPage - Math.floor(maxVisiblePages / 2));
+            let endPage = Math.min(totalPages, startPage + maxVisiblePages - 1);
+
+            if (endPage - startPage < maxVisiblePages - 1) {
+                startPage = Math.max(1, endPage - maxVisiblePages + 1);
+            }
+
+            for (let i = startPage; i <= endPage; i++) {
+                const pageBtn = document.createElement('button');
+                pageBtn.className = `page-number ${i === currentPage ? 'active' : ''}`;
+                pageBtn.textContent = i;
+                pageBtn.onclick = () => goToPage(i);
+                pageNumbers.appendChild(pageBtn);
+            }
+        }
+
+        function goToPage(page) {
+            currentPage = page;
+            renderTable();
+            updatePagination();
+        }
+
+        function searchTable() {
+            const searchTerm = document.getElementById('tableSearch').value.toLowerCase();
+            const groupFilter = document.getElementById('customerGroupFilter').value;
+
+            filteredData = tableData.filter(row => {
+                const matchesSearch = !searchTerm || 
+                    Object.values(row).some(value => 
+                        String(value).toLowerCase().includes(searchTerm)
+                    );
+                
+                const matchesGroup = !groupFilter || row['Customer Group'] === groupFilter;
+                
+                return matchesSearch && matchesGroup;
+            });
+
+            currentPage = 1;
+            renderTable();
+            updatePagination();
+        }
+
+        function sortTable(column) {
+            if (sortColumn === column) {
+                sortDirection = sortDirection === 'asc' ? 'desc' : 'asc';
+            } else {
+                sortColumn = column;
+                sortDirection = 'asc';
+            }
+
+            // Update sort indicators
+            document.querySelectorAll('.data-table th').forEach(th => {
+                th.classList.remove('sort-asc', 'sort-desc');
+            });
+
+            const columnMap = {
+                'customerGroup': 'Customer Group',
+                'customerName': 'CustomerName',
+                'factoryName': 'FactoryName',
+                'orderValue': 'Order Value',
+                'orderQuantity': 'Order Quantity',
+                'margin': 'Margin'
+            };
+
+            const actualColumn = columnMap[column];
+            const th = document.querySelector(`[data-column="${column}"]`);
+            th.classList.add(sortDirection === 'asc' ? 'sort-asc' : 'sort-desc');
+
+            filteredData.sort((a, b) => {
+                let aVal = a[actualColumn];
+                let bVal = b[actualColumn];
+
+                // Handle numeric columns
+                if (['Order Value', 'Order Quantity', 'Margin'].includes(actualColumn)) {
+                    aVal = parseFloat(aVal) || 0;
+                    bVal = parseFloat(bVal) || 0;
+                } else {
+                    aVal = String(aVal || '').toLowerCase();
+                    bVal = String(bVal || '').toLowerCase();
+                }
+
+                if (aVal < bVal) return sortDirection === 'asc' ? -1 : 1;
+                if (aVal > bVal) return sortDirection === 'asc' ? 1 : -1;
+                return 0;
+            });
+
+            renderTable();
+        }
+
+        // Initialize table event listeners
+        function initializeTableEventListeners() {
+            // Search functionality
+            const searchInput = document.getElementById('tableSearch');
+            const searchBtn = document.querySelector('.search-btn');
+            const groupFilter = document.getElementById('customerGroupFilter');
+
+            if (searchInput) searchInput.addEventListener('input', searchTable);
+            if (searchBtn) searchBtn.addEventListener('click', searchTable);
+            if (groupFilter) groupFilter.addEventListener('change', searchTable);
+
+            // Pagination
+            const prevBtn = document.getElementById('prevPage');
+            const nextBtn = document.getElementById('nextPage');
+            
+            if (prevBtn) {
+                prevBtn.addEventListener('click', () => {
+                    if (currentPage > 1) goToPage(currentPage - 1);
+                });
+            }
+
+            if (nextBtn) {
+                nextBtn.addEventListener('click', () => {
+                    const totalPages = Math.ceil(filteredData.length / rowsPerPage);
+                    if (currentPage < totalPages) goToPage(currentPage + 1);
+                });
+            }
+
+            // Sorting
+            document.querySelectorAll('.sortable').forEach(th => {
+                th.addEventListener('click', () => {
+                    sortTable(th.dataset.column);
+                });
+            });
+
+            // Sort by selector
+            const sortBy = document.getElementById('sortBy');
+            if (sortBy) {
+                sortBy.addEventListener('change', (e) => {
+                    const value = e.target.value;
+                    if (value) {
+                        sortTable(value);
+                    }
+                });
+            }
+        }
     </script>
 </body>
 </html>

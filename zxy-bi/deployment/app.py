@@ -298,6 +298,66 @@ def get_cpo_detailed_data():
         logger.error(f"Error fetching CPO detailed data: {e}")
         return jsonify([])
 
+@app.route('/api/table-data')
+def get_table_data():
+    """API endpoint for data table CSV data"""
+    try:
+        import pandas as pd
+        import os
+        import numpy as np
+        
+        # Path to the CSV file
+        csv_path = os.path.join(os.path.dirname(os.path.dirname(__file__)), '..', 'data', 'data.csv')
+        
+        # Read CSV file
+        df = pd.read_csv(csv_path)
+        
+        # Replace NaN values with appropriate defaults
+        df = df.fillna({
+            'Customer Group': '',
+            'CustomerName': '',
+            'FactoryName': '',
+            'Order Value': 0,
+            'Order Quantity': 0,
+            'Margin': 0
+        })
+        
+        # Convert to list of dictionaries
+        data = df.to_dict('records')
+        
+        # Ensure all numeric values are properly formatted
+        for record in data:
+            for key, value in record.items():
+                if pd.isna(value) or value is np.nan:
+                    if key in ['Order Value', 'Order Quantity', 'Margin']:
+                        record[key] = 0
+                    else:
+                        record[key] = ''
+        
+        logger.info(f"Retrieved {len(data)} records from CSV file")
+        return jsonify(data)
+    except Exception as e:
+        logger.error(f"Error reading CSV file: {e}")
+        # Return sample data if CSV reading fails
+        return jsonify([
+            {
+                "Customer Group": "ABC S.A.",
+                "CustomerName": "ABC S.A.",
+                "FactoryName": "Apparels Village Limited",
+                "Order Value": 96964,
+                "Order Quantity": 20775,
+                "Margin": 6817
+            },
+            {
+                "Customer Group": "Admiral",
+                "CustomerName": "Admiral Diethnis Athlitiki Ltd.",
+                "FactoryName": "Aleya Apparels Ltd.",
+                "Order Value": 16333,
+                "Order Quantity": 1098,
+                "Margin": 2718
+            }
+        ])
+
 @app.errorhandler(404)
 def not_found(error):
     """Handle 404 errors"""
